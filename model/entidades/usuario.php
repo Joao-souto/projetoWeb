@@ -6,6 +6,7 @@ class Usuario {
     public $email;
     public $senha;
     public $dataCriacao;
+    public $loginValido;
 
       // Getters e Setters
     public function getIdUsuario() {
@@ -46,6 +47,13 @@ class Usuario {
 
     public function setDataCriacao($dataCriacao) {
         $this->dataCriacao = $dataCriacao;
+    }
+    public function getLoginValido() {
+        return $this->loginValido;
+    }
+
+    public function setLoginValido($valor) {
+        $this->loginValido = $valor;
     }
 }
 

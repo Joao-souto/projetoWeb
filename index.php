@@ -1,22 +1,36 @@
+<?php
+
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
 </head>
+
 <body>
 
-<form action="">
-    <label for="">email:</label>
-    <input type="text">
+    <h1>Login</h1>
 
-    <label for="">senha:</label>
-    <input type="text">
+    <form action="" method="POST">
 
-    <button type="submit">Logar</button>
-    <a href="view/cadastro.php">Cadastre-se</a>
-</form>
-    
+        <div>
+            <input type="text" name="email" placeholder="email">
+        </div>
+
+        <div>
+            <input type="password" name="senha" placeholder="senha">
+        </div>
+
+        <button type="submit">Entrar</button>
+        <a href="view/cadastro.php">Cadastre-se</a>
+    </form>
+
 </body>
+
 </html>

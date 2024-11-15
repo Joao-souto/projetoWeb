@@ -11,14 +11,10 @@ class Conexao {
             // Configura o modo de erro para exceção
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             
-            // Em ambiente de produção, não exiba mensagens de sucesso
-            // echo "Conectado com sucesso"; 
-
             return $conn;
         } catch(PDOException $e) {
-            // Em um ambiente de produção, logue os erros em vez de exibir
             error_log("Connection failed: " . $e->getMessage()); 
-            return null; // Retorna null se a conexão falhar
+            return null;
         }
     }
 }
