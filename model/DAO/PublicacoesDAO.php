@@ -1,6 +1,6 @@
 <?php
 
-class PublicacaoDAO {
+class PublicacoesDAO {
     // Constantes para status
     const STATUS_ATIVO = 'ativo';
     const STATUS_EXCLUIDO = 'excluido';

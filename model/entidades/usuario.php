@@ -1,6 +1,6 @@
 <?php
 class Usuario {
-      // atributos
+    // Atributos
     public $idUsuario;
     public $nome;
     public $email;
@@ -8,7 +8,14 @@ class Usuario {
     public $dataCriacao;
     public $loginValido;
 
-      // Getters e Setters
+    // Construtor
+    public function __construct($nome, $email, $senha) {
+        $this->nome = $nome;
+        $this->email = $email;
+        $this->senha = $senha;
+    }
+
+    // Getters e Setters
     public function getIdUsuario() {
         return $this->idUsuario;
     }
@@ -48,6 +55,7 @@ class Usuario {
     public function setDataCriacao($dataCriacao) {
         $this->dataCriacao = $dataCriacao;
     }
+
     public function getLoginValido() {
         return $this->loginValido;
     }
@@ -56,5 +64,4 @@ class Usuario {
         $this->loginValido = $valor;
     }
 }
-
 ?>
