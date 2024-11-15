@@ -1,22 +1,30 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Cadastro</title>
 </head>
+
 <body>
-<form action="cadastro.php" method="POST">
-    <label for="nome">Nome:</label>
-    <input type="text" id="nome" name="nome">
+    <div>
+        <h1 class="titulo">Cadastre-se</h1>
+        <form action="cadastro.php" method="POST">
+            <div>
+                <input type="text" id="nome" name="nome" class="inputLogin" placeholder="Nome">
+            </div>
+            <div>
+                <input type="email" id="email" name="email" class="inputLogin" placeholder="Email">
+            </div>
+            <div>
+                <input type="password" id="senha" name="senha" class="inputLogin" placeholder="Senha">
+            </div>
 
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email">
-
-    <label for="senha">Senha:</label>
-    <input type="password" id="senha" name="senha">
-
-    <button type="submit">Cadastrar</button>
-</form>
+            <button type="submit" class="botaoLogin">Cadastrar</button>
+        </form>
+    </div>
 </body>
+
 </html>
