@@ -1,4 +1,5 @@
 <?php
+require_once '../util/Conexao.php';
 
 class UsuariosDAO {
     // Método para criar um novo usuário

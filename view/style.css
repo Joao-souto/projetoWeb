@@ -34,6 +34,7 @@ body{
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 .linkCadastro{
+    margin-top: 3vh;
     text-decoration: none;
     color: black;
 }
