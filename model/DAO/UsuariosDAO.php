@@ -1,9 +1,10 @@
 <?php
 require_once '../util/Conexao.php';
+require_once '../model/entidades/Usuarios.php';
 
 class UsuariosDAO {
     // Método para criar um novo usuário
-    public static function criarUsuario($nome, $email, $senha) {
+    public static function cadastrarUsuario(Usuarios $usuario) {
         $conn = Conexao::getConexao(); // Obtemos a conexão
         if ($conn === null) {
             return false;
@@ -13,7 +14,7 @@ class UsuariosDAO {
         
         try {
             $stmt = $conn->prepare($sql);
-            $stmt->execute([$nome, $email, $senha]);
+            $stmt->execute([$usuario->getNome(), $usuario->getEmail(), $usuario->getSenha()]);
             return true;
         } catch (PDOException $e) {
             error_log("Erro ao criar usuário: " . $e->getMessage());
@@ -21,7 +22,38 @@ class UsuariosDAO {
         }
     }
 
-    public static function obterUsuario($id_usuario) {
+    // Método  para consultar ID de usuário
+    public static function consultarIdUsuario(Usuarios $usuario) {
+        $conn = Conexao::getConexao();
+        if ($conn === null) {
+            return null;
+        }
+    
+        $sql = "SELECT id_usuario FROM usuarios WHERE email = ?";
+    
+        try {
+            $stmt = $conn->prepare($sql);
+            $stmt->execute([$usuario->getEmail()]);
+    
+            // Obtém o resultado como um array associativo
+            $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+            // Verifica se o ID do usuário foi encontrado
+            if ($resultado) {
+                return $resultado['id_usuario'];
+            } else {
+                return null; // ID de usuário não encontrado
+            }
+        } catch (PDOException $e) {
+            error_log("Erro ao obter ID de usuário: " . $e->getMessage());
+            return null;
+        }
+    }
+
+    public static function consultarUsuario(Usuarios $usuario) {
+        if($usuario->getIdUsuario() == 0){
+            $usuario->setIdUsuario(UsuariosDAO::consultarIdUsuario($usuario));
+        }
         $conn = Conexao::getConexao();
         if ($conn === null) {
             return null;
@@ -31,7 +63,7 @@ class UsuariosDAO {
     
         try {
             $stmt = $conn->prepare($sql);
-            $stmt->execute([$id_usuario]);
+            $stmt->execute([$usuario->getIdUsuario()]);
     
             // Obtém o resultado como um array associativo
             $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -57,7 +89,10 @@ class UsuariosDAO {
     
 
     // Método para atualizar um usuário
-    public static function atualizarUsuario($id_usuario, $nome, $email, $senha) {
+    public static function atualizarUsuario(Usuarios $usuario) {
+        if($usuario->getIdUsuario() == 0){
+            $usuario->setIdUsuario(UsuariosDAO::consultarIdUsuario($usuario));
+        }
         $conn = Conexao::getConexao();
         if ($conn === null) {
             return false;
@@ -67,7 +102,7 @@ class UsuariosDAO {
         
         try {
             $stmt = $conn->prepare($sql);
-            $stmt->execute([$nome, $email, $senha, $id_usuario]);
+            $stmt->execute([$usuario->getNome(), $usuario->getEmail(), $usuario->getSenha(), $usuario->getIdUsuario()]);
             return true;
         } catch (PDOException $e) {
             error_log("Erro ao atualizar usuário: " . $e->getMessage());
@@ -76,7 +111,10 @@ class UsuariosDAO {
     }
 
     // Método para excluir um usuário
-    public static function excluirUsuario($id_usuario) {
+    public static function excluirUsuario(Usuarios $usuario) {
+        if($usuario->getIdUsuario() == 0){
+            $usuario->setIdUsuario(UsuariosDAO::consultarIdUsuario($usuario));
+        }
         $conn = Conexao::getConexao();
         if ($conn === null) {
             return false;
@@ -86,7 +124,7 @@ class UsuariosDAO {
         
         try {
             $stmt = $conn->prepare($sql);
-            $stmt->execute([$id_usuario]);
+            $stmt->execute([$usuario->getIdUsuario()]);
             return true;
         } catch (PDOException $e) {
             error_log("Erro ao excluir usuário: " . $e->getMessage());

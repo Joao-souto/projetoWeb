@@ -15,6 +15,14 @@ class Usuarios {
         $this->senha = $senha;
     }
 
+    // Método para visualizar usuário
+    public function visualizarUsuario(){
+        echo "id_usuario: " . $this->idUsuario;
+        echo "nome: " . $this->nome;
+        echo "email: " . $this->email;
+        echo "senha: " . $this->senha;
+    }
+
     // Getters e Setters
     public function getIdUsuario() {
         return $this->idUsuario;

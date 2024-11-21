@@ -17,7 +17,8 @@ class UsuariosController {
 
         // Cria o usuário utilizando o DAO
         try {
-            $resultado = UsuariosDAO::criarUsuario($nome, $email, $senha);
+            $usuario = new Usuarios($nome, $email, $senha);
+            $resultado = UsuariosDAO::cadastrarUsuario($usuario);
             if ($resultado) {
                 return "Usuário cadastrado com sucesso!";
             } else {
