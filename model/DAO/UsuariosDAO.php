@@ -38,7 +38,7 @@ class UsuariosDAO {
             // Verifica se o usuário foi encontrado
             if ($resultado) {
                 // Cria um objeto Usuario com os dados obtidos
-                $usuario = new Usuario($resultado['nome'], $resultado['email'], $resultado['senha']);
+                $usuario = new Usuarios($resultado['nome'], $resultado['email'], $resultado['senha']);
                 
                 // Define os outros atributos manualmente
                 $usuario->setIdUsuario($resultado['id_usuario']);
@@ -130,7 +130,7 @@ class UsuariosDAO {
             // Verifica se o usuário foi encontrado
             if ($resultado) {
                 // Cria um objeto Usuario com os dados obtidos
-                $usuario = new Usuario($resultado['nome'], $resultado['email'], $resultado['senha']);
+                $usuario = new Usuarios($resultado['nome'], $resultado['email'], $resultado['senha']);
                 
                 // Define os outros atributos manualmente
                 $usuario->setIdUsuario($resultado['id_usuario']);

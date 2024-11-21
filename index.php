@@ -30,7 +30,7 @@
             <button type="submit" class="botaoLogin">Entrar</button>
         </form>
 
-        <a href="view/cadastro.php" class="linkCadastro">Cadastre-se</a>
+        <a href="view/Cadastro.php" class="linkCadastro">Cadastre-se</a>
     </div>
 
 </body>

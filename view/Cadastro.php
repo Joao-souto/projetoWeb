@@ -24,6 +24,7 @@
 
             <button type="submit" class="botaoLogin">Cadastrar</button>
         </form>
+        <a href="../index.php" class="linkCadastro">Login</a>
     </div>
 </body>
 
