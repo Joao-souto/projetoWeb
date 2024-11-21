@@ -1,12 +1,12 @@
 <?php
 class Publicacoes {
      // atributos
-    public $idPublicacao;
-    public $idUsuario;
-    public $descricao;
-    public $anexo; //?
-    public $dataPublicacao;
-    public $status;
+    private $idPublicacao;
+    private $idUsuario;
+    private $descricao;
+    private $anexo; //?
+    private $dataPublicacao;
+    private $status;
 
     // Getter e Setter 
     public function getIdPublicacao() {

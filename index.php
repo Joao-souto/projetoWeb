@@ -1,5 +1,36 @@
 <?php
 
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
+// Variáveis para armazenar os dados do formulário
+$email = '';
+$senha = '';
+$mensagem = '';
+
+// Processa o formulário caso seja enviado via POST
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    include_once 'controller/UsuariosController.php';
+
+    // Pega os valores dos inputs e armazena nas variáveis
+    $email = isset($_POST['email']) ? $_POST['email'] : '';
+    $senha = isset($_POST['senha']) ? $_POST['senha'] : '';
+
+    // Chama o método para validar o login do usuário
+    $usuario = UsuariosController::realizarLogin($email,  $senha);
+
+    // Verifica se o login foi autorizado
+    if ($usuario->getLoginValido()) {
+        // Redireciona para a página home
+        header('Location: view/Home.php');
+        exit;
+    } else if ($usuario === "Por favor, preencha todos os campos.") {
+        $mensagem = "Por favor, preencha todos os campos.";
+    } else {
+        $mensagem = "Email ou senha inválidos!.";
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -17,7 +48,7 @@
     <div>
         <h1 class="titulo">LOGIN</h1>
 
-        <form action="" method="POST">
+        <form action="index.php" method="POST">
 
             <div>
                 <input type="text" name="email" placeholder="email" class="inputLogin">
@@ -29,7 +60,7 @@
 
             <button type="submit" class="botaoLogin">Entrar</button>
         </form>
-
+        <h3 class="retorno"><?php echo $mensagem ?></h3>
         <a href="view/Cadastro.php" class="linkCadastro">Cadastre-se</a>
     </div>
 

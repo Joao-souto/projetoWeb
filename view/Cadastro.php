@@ -19,8 +19,16 @@
 
         // Chama o método para cadastrar o usuário
         $mensagem = UsuariosController::cadastrarUsuario($nome, $email, $senha);
+
+        // Verifica se a mensagem de sucesso foi retornada e redireciona para o login
+        if ($mensagem === "Usuário cadastrado com sucesso!") {
+            // Redireciona para a página de login
+            header('Location: ../index.php');
+            exit;
+        }
     }
     ?>
+
 
     <!DOCTYPE html>
     <html lang="pt-br">
@@ -48,7 +56,7 @@
                 </div>
                 <button type="submit" class="botaoLogin">Cadastrar</button>
             </form>
-            <h3 class="retorno"><?php echo $mensagem?></h3>
+            <h3 class="retorno"><?php echo $mensagem ?></h3>
             <a href="../index.php" class="linkCadastro">Login</a>
         </div>
     </body>

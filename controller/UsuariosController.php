@@ -37,12 +37,15 @@ class UsuariosController {
             return "Por favor, preencha todos os campos.";
         }
 
+        // Cria usuario
+        $usuarioLogin = new Usuarios("", $email, $senha);
+
         // Busca o usuário utilizando o DAO
         $usuario = UsuariosDAO::loginValido($email, $senha);
         if ($usuario) {
-            return $usuario; // Retorna o objeto usuário
+            return $usuario; // Retorna o objeto usuário consultado no banco, Login válido
         } else {
-            return "E-mail ou senha inválidos.";
+            return $usuarioLogin; // Retorna o objeto usuário com login inválido
         }
     }
 

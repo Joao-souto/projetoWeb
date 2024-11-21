@@ -1,12 +1,12 @@
 <?php
 class Usuarios {
     // Atributos
-    public $idUsuario;
-    public $nome;
-    public $email;
-    public $senha;
-    public $dataCriacao;
-    public $loginValido;
+    private $idUsuario;
+    private $nome;
+    private $email;
+    private $senha;
+    private $dataCriacao;
+    private $loginValido;
 
     // Construtor
     public function __construct($nome, $email, $senha) {
