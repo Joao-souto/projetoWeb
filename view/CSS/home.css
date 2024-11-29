@@ -1,0 +1,41 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: white;
+}
+
+body {
+    display: flex;
+}
+
+#vsco2 {
+    width: 15vw;
+    margin-bottom: 4vh;
+    margin-top: 4vh;
+}
+header {
+    width: 20vw;
+    height: 100vh;
+    background-color: #2e2d30;
+}
+.linkMenu {
+    display: flex;
+    justify-content: start;
+    text-decoration: none;
+    padding: 2vw;
+}
+.linkMenu:hover{
+    background-color: #424143;
+}
+.divLinkMenu {
+    display: flex;
+    width: 20vw;
+}
+h3{
+    margin-left: 1vw;
+}
+main {
+    background-color: #424143;
+    width: 80vw;
+}

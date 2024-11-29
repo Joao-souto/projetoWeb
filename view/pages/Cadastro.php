@@ -1,5 +1,4 @@
     <?php
-    include_once '../controller/UsuariosController.php';
 
     ini_set('display_errors', 1);
     error_reporting(E_ALL);
@@ -36,7 +35,8 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="../view/style.css">
+        <link rel="stylesheet" href="../CSS/loginECadastro.css">
+        <link rel="icon" href="../IMG/logoIcon.png" type="image/png">
         <title>Cadastro</title>
     </head>
 
@@ -57,7 +57,7 @@
                 <button type="submit" class="botaoLogin">Cadastrar</button>
             </form>
             <h3 class="retorno"><?php echo $mensagem ?></h3>
-            <a href="../index.php" class="linkCadastro">Login</a>
+            <a href="../../index.php" class="linkCadastro">Login</a>
         </div>
     </body>
 

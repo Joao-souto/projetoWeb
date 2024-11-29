@@ -11,7 +11,7 @@ $mensagem = '';
 // Processa o formulário caso seja enviado via POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    include_once 'controller/UsuariosController.php';
+    require_once dirname(__DIR__) . '/controller/UsuariosController.php';
 
     // Pega os valores dos inputs e armazena nas variáveis
     $email = isset($_POST['email']) ? $_POST['email'] : '';
@@ -39,7 +39,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="view/style.css">
+    <link rel="stylesheet" href="view/CSS/loginECadastro.css">
+    <link rel="icon" href="view/IMG/logoIcon.png" type="image/png">
     <title>Login</title>
 </head>
 
@@ -61,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <button type="submit" class="botaoLogin">Entrar</button>
         </form>
         <h3 class="retorno"><?php echo $mensagem ?></h3>
-        <a href="view/Cadastro.php" class="linkCadastro">Cadastre-se</a>
+        <a href="view/pages/Cadastro.php" class="linkCadastro">Cadastre-se</a>
     </div>
 
 </body>

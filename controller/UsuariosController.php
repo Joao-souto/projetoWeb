@@ -1,6 +1,6 @@
 <?php
-require_once '../model/DAO/UsuariosDAO.php';
-require_once '../model/entidades/Usuarios.php';
+require_once dirname(__DIR__) . '../model/DAO/UsuariosDAO.php';
+require_once dirname(__DIR__) . '../model/entidades/Usuarios.php';
 
 class UsuariosController {
     // Método para criar um novo usuário
