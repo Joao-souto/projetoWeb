@@ -6,13 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VSCO2</title>
     <link rel="icon" href="../IMG/logoIcon.png" type="image/png">
-    <link rel="stylesheet" href="../CSS/viewPost.css">
+    <link rel="stylesheet" href="../CSS/post.css">
 </head>
 
 <body>
     <header>
-    <a href="" class="botao">FEED</a>            
-    <a href="" class="botao">NEW POST</a>    
+    <a href="home.php" class="botao">FEED</a>            
+    <a href="new-post.php" class="botao">NEW POST</a>    
     </header>   
     <main>
         <img src="../IMG/ft1.jpg" alt="">

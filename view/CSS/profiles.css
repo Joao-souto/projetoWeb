@@ -68,9 +68,49 @@ main {
     margin-left: 18vw;
     padding: 2rem;
 }
-h1{
-    margin: 10vh 3vw;
+
+
+/* Estilo geral do container */
+.search-container {
+    display: flex;
+    align-items: center;
+    justify-content: start;
 }
+
+/* Estilo do input */
+.search-input {
+    width: 300px;
+    padding: 10px 15px;
+    border: 2px solid #ccc;
+    border-radius: 25px 0 0 25px;
+    outline: none;
+    font-size: 16px;
+    color: black;
+    transition: border-color 0.3s;
+}
+
+/* Foco no input */
+.search-input:focus {
+    border-color:#2e2d30;
+}
+
+/* Estilo do botão */
+.search-button {
+    padding: 10px 15px;
+    background-color: white;
+    border: none;
+    color: black;
+    cursor: pointer;
+    border-radius: 0 25px 25px 0;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+/* Hover no botão */
+.search-button:hover {
+    background-color: #555;
+}
+
 
 .photo-gallery {
     display: grid;
@@ -89,7 +129,6 @@ h1{
 .photo-item:hover {
     cursor: pointer;
     box-shadow: 10px 10px 25px rgba(0, 0, 0, 0.1);
-    padding: 0.6rem;
 }
 
 .photo-item img {
@@ -105,7 +144,7 @@ h1{
     color: #555;
 }
 
-#post-botao {
+#postBotao {
     position: fixed; /* Fixa o botão na tela */
     text-decoration: none;
     text-align: center;
@@ -124,7 +163,94 @@ h1{
     z-index: 1000; /* Garante que fique acima de outros elementos */
     transition: background-color 0.3s ease; /* Suaviza a mudança de cor */
 }
-#post-botao:hover{
+#postBotao:hover{
     color: white;
     background-color: #2e2d30;
+}
+#perfil{
+    margin-bottom: 10vh;
+    margin-top: 10vh;
+    display: flex;
+    align-items: center;
+}
+#fotoPerfil{
+    height: 35vh;
+    width: 17vw;
+    border: solid 5px black;
+    border-radius: 50%;
+}
+#userEmail{
+    margin-left: 2vw;
+}
+h2{
+    margin-top: 1vh;
+    font-size: 3vh;
+}
+.divEdit{
+    display: flex;
+    justify-content: space-around;
+}
+/* Estilo do link */
+.edit-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    text-decoration: none;
+    background-color: #f0f0f0;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    font-size: 20px;
+    color: #555;
+    transition: all 0.3s ease;
+}
+
+/* Estilo ao passar o mouse */
+.edit-link:hover {
+    background-color: #555;
+    border-color: #2e2d30;
+    color: white;
+    transform: scale(1.1);
+}
+
+/* Estilo ao focar (acessibilidade) */
+.edit-link:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+/* Estilo do botão redondo */
+.delete-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #555;
+    color: white;
+    border: none;
+    border-radius: 50%; /* Deixa o botão redondo */
+    width: 45px; /* Largura do botão */
+    height: 45px; /* Altura do botão */
+    font-size: 20px; /* Tamanho do ícone */
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Alterações ao passar o mouse */
+.delete-button:hover {
+    background-color: #cc0000;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+    transform: scale(1.1);
+}
+
+/* Alterações ao clicar */
+.delete-button:active {
+    background-color: #990000;
+    transform: scale(1);
+}
+
+/* Estilo para acessibilidade */
+.delete-button:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(255, 77, 77, 0.8);
 }

@@ -35,7 +35,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="../CSS/loginECadastro.css">
+        <link rel="stylesheet" href="../CSS/login-cadastro.css">
         <link rel="icon" href="../IMG/logoIcon.png" type="image/png">
         <title>Cadastro</title>
     </head>
@@ -44,20 +44,20 @@
         <div>
             <h1 class="titulo">Cadastre-se</h1>
 
-            <form action="Cadastro.php" method="POST">
+            <form action="cadastro.php" method="POST">
                 <div>
-                    <input type="text" id="nome" name="nome" class="inputLogin" placeholder="Nome" value="<?php echo htmlspecialchars($nome); ?>" required>
+                    <input type="text" id="nome" name="nome" class="input-login" placeholder="Nome" value="<?php echo htmlspecialchars($nome); ?>" required>
                 </div>
                 <div>
-                    <input type="email" id="email" name="email" class="inputLogin" placeholder="Email" value="<?php echo htmlspecialchars($email); ?>" required>
+                    <input type="email" id="email" name="email" class="input-login" placeholder="Email" value="<?php echo htmlspecialchars($email); ?>" required>
                 </div>
                 <div>
-                    <input type="password" id="senha" name="senha" class="inputLogin" placeholder="Senha" value="<?php echo htmlspecialchars($senha); ?>" required>
+                    <input type="password" id="senha" name="senha" class="input-login" placeholder="Senha" value="<?php echo htmlspecialchars($senha); ?>" required>
                 </div>
-                <button type="submit" class="botaoLogin">Cadastrar</button>
+                <button type="submit" class="botao-login">Cadastrar</button>
             </form>
             <h3 class="retorno"><?php echo $mensagem ?></h3>
-            <a href="../../index.php" class="linkCadastro">Login</a>
+            <a href="../../index.php" class="link-cadastro">Login</a>
         </div>
     </body>
 

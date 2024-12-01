@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="view/CSS/loginECadastro.css">
+    <link rel="stylesheet" href="view/CSS/login-cadastro.css">
     <link rel="icon" href="view/IMG/logoIcon.png" type="image/png">
     <title>Login</title>
 </head>
@@ -52,17 +52,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <form action="index.php" method="POST">
 
             <div>
-                <input type="text" name="email" placeholder="email" class="inputLogin">
+                <input type="text" name="email" placeholder="email" class="input-login">
             </div>
 
             <div>
-                <input type="password" name="senha" placeholder="senha" class="inputLogin">
+                <input type="password" name="senha" placeholder="senha" class="input-login">
             </div>
 
-            <button type="submit" class="botaoLogin">Entrar</button>
+            <button type="submit" class="botao-login">Entrar</button>
         </form>
         <h3 class="retorno"><?php echo $mensagem ?></h3>
-        <a href="view/pages/Cadastro.php" class="linkCadastro">Cadastre-se</a>
+        <a href="view/pages/cadastro.php" class="link-cadastro">Cadastre-se</a>
     </div>
 
 </body>

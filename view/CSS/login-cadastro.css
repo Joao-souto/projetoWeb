@@ -13,13 +13,13 @@ body{
 .titulo{
     font-weight: 200;
 }
-.inputLogin{
+.input-login{
     width: 40vw;
     height: 5%;
     margin: 3vh;
     padding: 2vh;
 }
-.botaoLogin{
+.botao-login{
     font-weight: bold;
     width: 20vw;
     background-color: white;
@@ -30,10 +30,10 @@ body{
     transition: box-shadow 0.3s ease; 
     margin-bottom: 2vh;
 }
-.botaoLogin:hover {
+.botao-login:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
-.linkCadastro{
+.link-cadastro{
     margin-top: 3vh;
     text-decoration: none;
     color: black;
