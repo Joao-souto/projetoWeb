@@ -1,35 +1,33 @@
 <?php
+session_start();
+require_once __DIR__ . '/controller/UsuariosController.php';
 
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
-
-// Variáveis para armazenar os dados do formulário
-$email = '';
-$senha = '';
-$mensagem = '';
+$mensagem = "";
 
 // Processa o formulário caso seja enviado via POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-    require_once dirname(__DIR__) . '/controller/UsuariosController.php';
-
     // Pega os valores dos inputs e armazena nas variáveis
     $email = isset($_POST['email']) ? $_POST['email'] : '';
     $senha = isset($_POST['senha']) ? $_POST['senha'] : '';
 
-    // Chama o método para validar o login do usuário
-    $usuario = UsuariosController::realizarLogin($email,  $senha);
-
-    // Verifica se o login foi autorizado
-    if ($usuario->getLoginValido()) {
-        // Redireciona para a página home
-        header('Location: view/Home.php');
-        exit;
-    } else if ($usuario === "Por favor, preencha todos os campos.") {
+    // Verifica se os campos não estão vazios
+    if (empty($email) || empty($senha)) {
         $mensagem = "Por favor, preencha todos os campos.";
-    } else {
-        $mensagem = "Email ou senha inválidos!.";
+    }else{
+        $usuario = UsuariosController::realizarLogin($email, $senha);
+        if ($usuario->getLoginValido()) {
+            $_SESSION["id"] = $usuario->getIdUsuario();
+            $_SESSION["nome"] = $usuario->getNome();
+            $_SESSION["email"] = $usuario->getEmail();
+            header("Location: view/pages/home.php");
+            exit;
+        } else {
+            $mensagem = "Usuário ou senha incorretos!";
+        }
     }
+
 }
 ?>
 
@@ -61,8 +59,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <button type="submit" class="botao-login">Entrar</button>
         </form>
-        <h3 class="retorno"><?php echo $mensagem ?></h3>
         <a href="view/pages/cadastro.php" class="link-cadastro">Cadastre-se</a>
+        <h3 class="retorno"><?php echo $mensagem ?></h3>
     </div>
 
 </body>

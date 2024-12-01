@@ -1,6 +1,6 @@
 <?php
-require_once '../util/Conexao.php';
-require_once '../model/entidades/Usuarios.php';
+require_once '/xampp/htdocs/projetoWeb/util/Conexao.php';
+require_once '/xampp/htdocs/projetoWeb/model/entidades/Usuarios.php';
 
 class UsuariosDAO {
     // Método para criar um novo usuário

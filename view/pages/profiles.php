@@ -1,3 +1,6 @@
+<?php
+include("../../util/Protect.php");
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -26,7 +29,7 @@
                 <h3>PROFILES</h3>
             </div>
         </a>
-        <a href="" class="botao">EXIT</a>
+        <a href="../../controller/logout.php" class="botao">EXIT</a>
     </header>
     <a href="./new-post.php" id="postBotao">NEW POST</a>
     <main>
@@ -40,8 +43,8 @@
         <div id="perfil">
             <img src="../IMG/user.jpg" alt="Descrição da foto 1" id="fotoPerfil">
             <div id="userEmail">
-                <h1>usuarioTal</h1>
-                <h2>email@gmail.com</h2>
+                <h1><?php echo $_SESSION['nome']?></h1>
+                <h2><?php echo $_SESSION['email'] ?></h2>
             </div>
         </div>
         <section class="photo-gallery">

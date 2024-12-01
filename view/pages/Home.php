@@ -1,3 +1,7 @@
+<?php
+include("../../util/Protect.php");
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -26,7 +30,7 @@
                 <h3>PROFILES</h3>
             </div>
         </a>
-        <a href="" class="botao">EXIT</a>
+        <a href="../../controller/logout.php" class="botao">EXIT</a>
     </header>
     <a href="./new-post.php" id="post-botao">NEW POST</a>
     <main>

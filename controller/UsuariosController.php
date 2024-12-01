@@ -1,25 +1,19 @@
 <?php
-require_once dirname(__DIR__) . '../model/DAO/UsuariosDAO.php';
-require_once dirname(__DIR__) . '../model/entidades/Usuarios.php';
+require_once '/xampp/htdocs/projetoWeb/model/DAO/UsuariosDAO.php';
+require_once '/xampp/htdocs/projetoWeb/model/entidades/Usuarios.php';
 
 class UsuariosController {
     // Método para criar um novo usuário
     public static function cadastrarUsuario($nome, $email, $senha) {
-        // Verifica se os campos não estão vazios
-        if (empty($nome) || empty($email) || empty($senha)) {
-            return "Por favor, preencha todos os campos.";
-        }
-
         // Verifica o formato do e-mail
         if (!filter_var(  $email, FILTER_VALIDATE_EMAIL)) {
             return "E-mail inválido.";
         }
-
         // Cria o usuário utilizando o DAO
         try {
             $usuario = new Usuarios($nome, $email, $senha);
             $resultado = UsuariosDAO::cadastrarUsuario($usuario);
-            if ($resultado) {
+            if ($resultado == true) {
                 return "Usuário cadastrado com sucesso!";
             } else {
                 return "Erro ao cadastrar o usuário.";
@@ -31,11 +25,7 @@ class UsuariosController {
     }
 
     // Método para realizar o login
-    public static function realizarLogin($email, $senha) {
-        // Verifica se os campos não estão vazios
-        if (empty($email) || empty($senha)) {
-            return "Por favor, preencha todos os campos.";
-        }
+    public static function realizarLogin($email, $senha): string|Usuarios {
 
         // Cria usuario
         $usuarioLogin = new Usuarios("", $email, $senha);
