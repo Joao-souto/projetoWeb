@@ -48,7 +48,7 @@ $publicacoes = PublicacoesController::listarPublicacoesPorUsuario($idUsuario);
         </div>
 
         <div id="perfil">
-            <img src="../IMG/user.jpg" alt="Descrição da foto 1" id="fotoPerfil">
+            <img src="<?php echo $_SESSION['foto-perfil']?>" alt="Descrição da foto 1" id="fotoPerfil">
             <div id="userEmail">
                 <h1><?php echo $_SESSION['nome']?></h1>
                 <h2><?php echo $_SESSION['email'] ?></h2>

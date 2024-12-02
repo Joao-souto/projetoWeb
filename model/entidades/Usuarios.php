@@ -5,6 +5,7 @@ class Usuarios {
     private $nome;
     private $email;
     private $senha;
+    private $fotoPerfil;
     private $dataCriacao;
     private $loginValido;
 
@@ -38,6 +39,13 @@ class Usuarios {
 
     public function setNome($nome) {
         $this->nome = $nome;
+    }
+    public function getFotoPerfil() {
+        return $this->fotoPerfil;
+    }
+
+    public function setFotoPerfil($fotoPerfil) {
+        $this->fotoPerfil = $fotoPerfil;
     }
 
     public function getEmail() {

@@ -6,6 +6,7 @@ CREATE TABLE usuarios (
     nome VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     senha VARCHAR(255) NOT NULL,
+    foto_perfil VARCHAR(255),
     data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -19,4 +20,4 @@ CREATE TABLE publicacoes (
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) ON DELETE CASCADE
 );
 
-INSERT INTO usuarios (nome, email, senha) VALUES ('João Souto', 'joao.souto@gmail.com', 'senhaTeste1'), ('Gabriel Câmara', 'gabriel.camara@gmail.com', 'senhaTeste2'), ('Adriano', 'adriano@gmail.com', 'senhaTeste3'), ('Sarah', 'sarah@gmail.com', 'senhaTeste4');
+INSERT INTO usuarios (nome, email, senha,foto_perfil) VALUES ('João Souto', 'joao.souto@gmail.com', 'senhaTeste1','../IMG/perfil1.jpg'), ('Gabriel Câmara', 'gabriel.camara@gmail.com', 'senhaTeste2','../IMG/perfil2.jpg'), ('Adriano', 'adriano@gmail.com', 'senhaTeste3','../IMG/perfil3.jpg'), ('Sarah', 'sarah@gmail.com', 'senhaTeste4','../IMG/perfil4.jpg');

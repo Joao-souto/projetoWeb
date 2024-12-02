@@ -21,6 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION["id"] = $usuario->getIdUsuario();
             $_SESSION["nome"] = $usuario->getNome();
             $_SESSION["email"] = $usuario->getEmail();
+            $_SESSION["foto-perfil"] = $usuario->getFotoPerfil();
             header("Location: view/pages/home.php");
             exit;
         } else {

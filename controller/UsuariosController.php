@@ -42,8 +42,7 @@ class UsuariosController {
     // Método para listar todos os usuários
     public static function listarUsuarios() {
         try {
-            $usuarios = UsuariosDAO::listarUsuarios();
-            return $usuarios;
+            return UsuariosDAO::listarUsuarios();
         } catch (Exception $e) {
             error_log("Erro ao listar usuários: " . $e->getMessage());
             return [];

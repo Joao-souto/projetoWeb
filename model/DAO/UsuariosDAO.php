@@ -10,11 +10,16 @@ class UsuariosDAO {
             return false;
         }
         
-        $sql = "INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)";
+        $sql = "INSERT INTO usuarios (nome, email, senha, foto_perfil) VALUES (?, ?, ?, ?)";
         
         try {
             $stmt = $conn->prepare($sql);
-            $stmt->execute([$usuario->getNome(), $usuario->getEmail(), $usuario->getSenha()]);
+            $stmt->execute([
+                $usuario->getNome(),
+                $usuario->getEmail(),
+                $usuario->getSenha(),
+                $usuario->getFotoPerfil()
+            ]);
             return true;
         } catch (PDOException $e) {
             error_log("Erro ao criar usuário: " . $e->getMessage());
@@ -22,7 +27,7 @@ class UsuariosDAO {
         }
     }
 
-    // Método  para consultar ID de usuário
+    // Método para consultar ID de usuário
     public static function consultarIdUsuario(Usuarios $usuario) {
         $conn = Conexao::getConexao();
         if ($conn === null) {
@@ -34,26 +39,20 @@ class UsuariosDAO {
         try {
             $stmt = $conn->prepare($sql);
             $stmt->execute([$usuario->getEmail()]);
-    
-            // Obtém o resultado como um array associativo
             $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
-    
-            // Verifica se o ID do usuário foi encontrado
-            if ($resultado) {
-                return $resultado['id_usuario'];
-            } else {
-                return null; // ID de usuário não encontrado
-            }
+            return $resultado ? $resultado['id_usuario'] : null;
         } catch (PDOException $e) {
             error_log("Erro ao obter ID de usuário: " . $e->getMessage());
             return null;
         }
     }
 
+    // Método para consultar um usuário
     public static function consultarUsuario(Usuarios $usuario) {
-        if($usuario->getIdUsuario() == 0){
-            $usuario->setIdUsuario(UsuariosDAO::consultarIdUsuario($usuario));
+        if ($usuario->getIdUsuario() == 0) {
+            $usuario->setIdUsuario(self::consultarIdUsuario($usuario));
         }
+
         $conn = Conexao::getConexao();
         if ($conn === null) {
             return null;
@@ -64,19 +63,13 @@ class UsuariosDAO {
         try {
             $stmt = $conn->prepare($sql);
             $stmt->execute([$usuario->getIdUsuario()]);
-    
-            // Obtém o resultado como um array associativo
             $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
     
-            // Verifica se o usuário foi encontrado
             if ($resultado) {
-                // Cria um objeto Usuario com os dados obtidos
                 $usuario = new Usuarios($resultado['nome'], $resultado['email'], $resultado['senha']);
-                
-                // Define os outros atributos manualmente
                 $usuario->setIdUsuario($resultado['id_usuario']);
                 $usuario->setDataCriacao($resultado['data_criacao']);
-
+                $usuario->setFotoPerfil($resultado['foto_perfil']);
                 return $usuario;
             } else {
                 return null; // Usuário não encontrado
@@ -87,22 +80,28 @@ class UsuariosDAO {
         }
     }
     
-
     // Método para atualizar um usuário
     public static function atualizarUsuario(Usuarios $usuario) {
-        if($usuario->getIdUsuario() == 0){
-            $usuario->setIdUsuario(UsuariosDAO::consultarIdUsuario($usuario));
+        if ($usuario->getIdUsuario() == 0) {
+            $usuario->setIdUsuario(self::consultarIdUsuario($usuario));
         }
+
         $conn = Conexao::getConexao();
         if ($conn === null) {
             return false;
         }
 
-        $sql = "UPDATE usuarios SET nome = ?, email = ?, senha = ? WHERE id_usuario = ?";
+        $sql = "UPDATE usuarios SET nome = ?, email = ?, senha = ?, foto_perfil = ? WHERE id_usuario = ?";
         
         try {
             $stmt = $conn->prepare($sql);
-            $stmt->execute([$usuario->getNome(), $usuario->getEmail(), $usuario->getSenha(), $usuario->getIdUsuario()]);
+            $stmt->execute([
+                $usuario->getNome(),
+                $usuario->getEmail(),
+                $usuario->getSenha(),
+                $usuario->getFotoPerfil(),
+                $usuario->getIdUsuario()
+            ]);
             return true;
         } catch (PDOException $e) {
             error_log("Erro ao atualizar usuário: " . $e->getMessage());
@@ -112,9 +111,10 @@ class UsuariosDAO {
 
     // Método para excluir um usuário
     public static function excluirUsuario(Usuarios $usuario) {
-        if($usuario->getIdUsuario() == 0){
-            $usuario->setIdUsuario(UsuariosDAO::consultarIdUsuario($usuario));
+        if ($usuario->getIdUsuario() == 0) {
+            $usuario->setIdUsuario(self::consultarIdUsuario($usuario));
         }
+
         $conn = Conexao::getConexao();
         if ($conn === null) {
             return false;
@@ -142,7 +142,7 @@ class UsuariosDAO {
         $sql = "SELECT * FROM usuarios";
         
         try {
-            $stmt = $conn->prepare($sql); // Usando prepare() para segurança
+            $stmt = $conn->prepare($sql);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
@@ -151,6 +151,7 @@ class UsuariosDAO {
         }
     }
 
+    // Método para verificar login válido
     public static function loginValido($email, $senha) {
         $conn = Conexao::getConexao();
         if ($conn === null) {
@@ -162,29 +163,23 @@ class UsuariosDAO {
         try {
             $stmt = $conn->prepare($sql);
             $stmt->execute([$email, $senha]);
-    
-            // Obtém o resultado como um array associativo
             $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
     
-            // Verifica se o usuário foi encontrado
             if ($resultado) {
-                // Cria um objeto Usuario com os dados obtidos
                 $usuario = new Usuarios($resultado['nome'], $resultado['email'], $resultado['senha']);
-                
-                // Define os outros atributos manualmente
                 $usuario->setIdUsuario($resultado['id_usuario']);
                 $usuario->setDataCriacao($resultado['data_criacao']);
-                $usuario->setLoginValido(true); // Marcar como login válido
-    
+                $usuario->setFotoPerfil($resultado['foto_perfil']);
+                $usuario->setLoginValido(true);
+
                 return $usuario;
             } else {
-                return null; // Credenciais inválidas
+                return null;
             }
         } catch (PDOException $e) {
             error_log("Erro ao verificar login: " . $e->getMessage());
             return null;
         }
     }
-    
 }
 ?>
