@@ -4,9 +4,16 @@ class Publicacoes {
     private $idPublicacao;
     private $idUsuario;
     private $descricao;
-    private $anexo; //?
+    private $anexo;
     private $dataPublicacao;
     private $status;
+
+    // Construtor
+    public function __construct($idUsuario, $descricao, $anexo) {
+        $this->idUsuario = $idUsuario;
+        $this->descricao = $descricao;
+        $this->anexo = $anexo;
+    }
 
     // Getter e Setter 
     public function getIdPublicacao() {
@@ -41,7 +48,6 @@ class Publicacoes {
         $this->anexo = $anexo;
     }
 
-
     public function getDataPublicacao() {
         return $this->dataPublicacao;
     }
@@ -57,6 +63,5 @@ class Publicacoes {
     public function setStatus($status) {
         $this->status = $status;
     }
-
 }
 ?>

@@ -1,5 +1,10 @@
 <?php
 include("../../util/Protect.php");
+require_once '/xampp/htdocs/projetoWeb/controller/PublicacoesController.php';
+
+$data = PublicacoesController::listarPublicacoesComTotal();
+$publicacoes = $data['publicacoes'];
+$total = $data['total'];
 ?>
 
 <!DOCTYPE html>
@@ -37,37 +42,16 @@ include("../../util/Protect.php");
         <h1>VSCO — For creators, by creators</h1>
 
         <section class="photo-gallery">
-
-            <a href="view-post.php" class="photo-item">
-                <img src="../IMG/ft1.jpg" alt="Descrição da foto 1">
-                <p class="photo-caption">Descrição da Foto 1</p>
-            </a>
-
-            <a href="view-post.php" class="photo-item">
-                <img src="../IMG/ft2.jpg" alt="Descrição da foto 1">
-                <p class="photo-caption">Descrição da Foto 1</p>
-            </a>
-
-            <a href="view-post.php" class="photo-item">
-                <img src="../IMG/f3.jpg" alt="Descrição da foto 1">
-                <p class="photo-caption">Descrição da Foto 1</p>
-            </a>
-
-            <a href="view-post.php" class="photo-item">
-                <img src="../IMG/ft4.jpg" alt="Descrição da foto 1">
-                <p class="photo-caption">Descrição da Foto 1</p>
-            </a>
-
-            <a href="view-post.php" class="photo-item">
-                <img src="../IMG/ft5.jpg" alt="Descrição da foto 1">
-                <p class="photo-caption">Descrição da Foto 1</p>
-            </a>
-
-            <a href="view-post.php" class="photo-item">
-                <img src="../IMG/ft6.jpg" alt="Descrição da foto 1">
-                <p class="photo-caption">Descrição da Foto 1</p>
-            </a>
-            </a>
+            <?php if ($total > 0): ?>
+                <?php foreach ($publicacoes as $publicacao): ?>
+                    <a href="view-post.php?id=<?php echo $publicacao['id_publicacao']; ?>" class="photo-item">
+                        <img src="<?php echo $publicacao['anexo']; ?>" alt="Descrição da foto">
+                        <p class="photo-caption"><?php echo $publicacao['descricao']; ?></p>
+                    </a>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <p>Nenhuma publicação disponível no momento.</p>
+            <?php endif; ?>
         </section>
     </main>
 </body>

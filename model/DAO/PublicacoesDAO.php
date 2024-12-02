@@ -1,20 +1,23 @@
 <?php
-
-class PublicacoesDAO {
+require_once '/xampp/htdocs/projetoWeb/util/Conexao.php';
+require_once '/xampp/htdocs/projetoWeb/model/entidades/Publicacoes.php';
+class PublicacoesDAO
+{
     // Constantes para status
     const STATUS_ATIVO = 'ativo';
     const STATUS_EXCLUIDO = 'excluido';
     const STATUS_PENDENTE = 'pendente';
 
     // Método para criar uma nova publicação
-    public function criarPublicacao($id_usuario, $descricao, $anexo = null, $status = self::STATUS_ATIVO) {
+    public static function cadastrarPublicacao($id_usuario, $descricao, $anexo = null, $status = self::STATUS_ATIVO)
+    {
         $conn = Conexao::getConexao(); // Obtemos a conexão
         if ($conn === null) {
             return false;
         }
 
         $sql = "INSERT INTO publicacoes (id_usuario, descricao, anexo, status) VALUES (?, ?, ?, ?)";
-        
+
         try {
             $stmt = $conn->prepare($sql);
             $stmt->execute([$id_usuario, $descricao, $anexo, $status]);
@@ -26,14 +29,15 @@ class PublicacoesDAO {
     }
 
     // Método para obter uma publicação pelo ID
-    public function obterPublicacao($id_publicacao) {
+    public static function consultarPublicacao($id_publicacao)
+    {
         $conn = Conexao::getConexao();
         if ($conn === null) {
             return null;
         }
 
         $sql = "SELECT * FROM publicacoes WHERE id_publicacao = ?";
-        
+
         try {
             $stmt = $conn->prepare($sql);
             $stmt->execute([$id_publicacao]);
@@ -45,14 +49,15 @@ class PublicacoesDAO {
     }
 
     // Método para atualizar uma publicação
-    public function atualizarPublicacao($id_publicacao, $descricao, $anexo = null, $status = self::STATUS_ATIVO) {
+    public static function atualizarPublicacao($id_publicacao, $descricao, $anexo = null, $status = self::STATUS_ATIVO)
+    {
         $conn = Conexao::getConexao();
         if ($conn === null) {
             return false;
         }
 
         $sql = "UPDATE publicacoes SET descricao = ?, anexo = ?, status = ? WHERE id_publicacao = ?";
-        
+
         try {
             $stmt = $conn->prepare($sql);
             $stmt->execute([$descricao, $anexo, $status, $id_publicacao]);
@@ -64,14 +69,15 @@ class PublicacoesDAO {
     }
 
     // Método para excluir uma publicação
-    public function excluirPublicacao($id_publicacao) {
+    public static function deletarPublicacao($id_publicacao)
+    {
         $conn = Conexao::getConexao();
         if ($conn === null) {
             return false;
         }
 
         $sql = "DELETE FROM publicacoes WHERE id_publicacao = ?";
-        
+
         try {
             $stmt = $conn->prepare($sql);
             $stmt->execute([$id_publicacao]);
@@ -83,14 +89,15 @@ class PublicacoesDAO {
     }
 
     // Método para listar todas as publicações
-    public function listarPublicacoes() {
+    public static function listarPublicacoes()
+    {
         $conn = Conexao::getConexao();
         if ($conn === null) {
             return [];
         }
 
-        $sql = "SELECT * FROM publicacoes";
-        
+        $sql = "SELECT * FROM publicacoes ORDER BY data_publicacao ASC";
+
         try {
             $stmt = $conn->prepare($sql); // Usando prepare() para segurança
             $stmt->execute();
@@ -102,14 +109,15 @@ class PublicacoesDAO {
     }
 
     // Método para listar publicações de um usuário específico
-    public function listarPublicacoesPorUsuario($id_usuario) {
+    public static function listarPublicacoesPorUsuario($id_usuario)
+    {
         $conn = Conexao::getConexao();
         if ($conn === null) {
             return [];
         }
 
-        $sql = "SELECT * FROM publicacoes WHERE id_usuario = ?";
-        
+        $sql = "SELECT * FROM publicacoes WHERE id_usuario = ? ORDER BY data_publicacao DESC";
+
         try {
             $stmt = $conn->prepare($sql); // Usando prepare() para segurança
             $stmt->execute([$id_usuario]);
@@ -120,4 +128,3 @@ class PublicacoesDAO {
         }
     }
 }
-?>

@@ -1,6 +1,13 @@
 <?php
 include("../../util/Protect.php");
+require_once '/xampp/htdocs/projetoWeb/controller/PublicacoesController.php'; // Inclusão do controller
+
+$idUsuario = $_SESSION["id"];  // Obtendo o ID do usuário da sessão
+
+// Chama o método para listar as publicações de um usuário específico
+$publicacoes = PublicacoesController::listarPublicacoesPorUsuario($idUsuario);
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -48,107 +55,28 @@ include("../../util/Protect.php");
             </div>
         </div>
         <section class="photo-gallery">
-            <div class="photo-item">
-                <img src="../IMG/user.jpg" alt="Descrição da foto 1">
-                <div class="divEdit">
-                    <p class="photo-caption">Descrição da Foto 1</p>
+            <?php foreach ($publicacoes as $publicacao): ?>
+                <div class="photo-item">
+                    <!-- Exibindo a imagem se houver anexo -->
+                    <?php if ($publicacao['anexo']): ?>
+                        <img src="../IMG/<?php echo htmlspecialchars($publicacao['anexo']); ?>" alt="Imagem da publicação">
+                    <?php else: ?>
+                        <img src="../IMG/user.jpg" alt="Imagem padrão">
+                    <?php endif; ?>
+                    <div class="divEdit">
+                        <p class="photo-caption"><?php echo htmlspecialchars($publicacao['descricao']); ?></p>
 
-                    <div>
-                        <a href="edit-post.php" class="edit-link" title="Editar publicação">
-                            ✏️
-                        </a>
-                        <button class="delete-button" title="Excluir">
-                            🗑️
-                        </button>
+                        <div>
+                            <a href="edit-post.php?id=<?php echo $publicacao['id_publicacao']; ?>" class="edit-link" title="Editar publicação">
+                                ✏️
+                            </a>
+                            <button class="delete-button" title="Excluir">
+                                🗑️
+                            </button>
+                        </div>
                     </div>
-
                 </div>
-            </div>
-
-            <div class="photo-item">
-                <img src="../IMG/user.jpg" alt="Descrição da foto 1">
-                <div class="divEdit">
-                    <p class="photo-caption">Descrição da Foto 1</p>
-
-                    <div>
-                        <a href="edit-post.php" class="edit-link" title="Editar publicação">
-                            ✏️
-                        </a>
-                        <button class="delete-button" title="Excluir">
-                            🗑️
-                        </button>
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="photo-item">
-                <img src="../IMG/user.jpg" alt="Descrição da foto 1">
-                <div class="divEdit">
-                    <p class="photo-caption">Descrição da Foto 1</p>
-
-                    <div>
-                        <a href="edit-post.php" class="edit-link" title="Editar publicação">
-                            ✏️
-                        </a>
-                        <button class="delete-button" title="Excluir">
-                            🗑️
-                        </button>
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="photo-item">
-                <img src="../IMG/user.jpg" alt="Descrição da foto 1">
-                <div class="divEdit">
-                    <p class="photo-caption">Descrição da Foto 1</p>
-
-                    <div>
-                        <a href="edit-post.php" class="edit-link" title="Editar publicação">
-                            ✏️
-                        </a>
-                        <button class="delete-button" title="Excluir">
-                            🗑️
-                        </button>
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="photo-item">
-                <img src="../IMG/user.jpg" alt="Descrição da foto 1">
-                <div class="divEdit">
-                    <p class="photo-caption">Descrição da Foto 1</p>
-
-                    <div>
-                        <a href="edit-post.php" class="edit-link" title="Editar publicação">
-                            ✏️
-                        </a>
-                        <button class="delete-button" title="Excluir">
-                            🗑️
-                        </button>
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="photo-item">
-                <img src="../IMG/user.jpg" alt="Descrição da foto 1">
-                <div class="divEdit">
-                    <p class="photo-caption">Descrição da Foto 1</p>
-
-                    <div>
-                        <a href="edit-post.php" class="edit-link" title="Editar publicação">
-                            ✏️
-                        </a>
-                        <button class="delete-button" title="Excluir">
-                            🗑️
-                        </button>
-                    </div>
-
-                </div>
-            </div>
+            <?php endforeach; ?>
         </section>
     </main>
 </body>
