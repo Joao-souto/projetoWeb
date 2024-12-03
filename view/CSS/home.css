@@ -65,6 +65,7 @@ h3{
 main {
     background-color: #424143;
     width: 82vw;
+    min-height: 100vh;  /* Garante que o elemento tenha pelo menos 100vh */
     margin-left: 18vw;
     padding: 2rem;
 }
