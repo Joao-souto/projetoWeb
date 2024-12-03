@@ -48,6 +48,25 @@ class PublicacoesDAO
         }
     }
 
+    public static function obterProximoIdPublicacao()
+    {
+        $conn = Conexao::getConexao();
+        if ($conn === null) {
+            return null;
+        }
+
+        $sql = "SHOW TABLE STATUS LIKE 'publicacoes'";
+
+        try {
+            $stmt = $conn->query($sql);
+            $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $resultado['Auto_increment'] ?? null;
+        } catch (PDOException $e) {
+            error_log("Erro ao obter próximo ID: " . $e->getMessage());
+            return null;
+        }
+    }
+
     // Método para atualizar uma publicação
     public static function atualizarPublicacao($id_publicacao, $descricao, $anexo = null, $status = self::STATUS_ATIVO)
     {
