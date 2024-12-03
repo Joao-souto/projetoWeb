@@ -20,7 +20,6 @@ include("../../util/Protect.php");
     <main>
         <form action="../../controller/PublicacoesController.php" method="POST" enctype="multipart/form-data">
             <div>
-                <input type="text" name="titulo" placeholder="Título" required>
                 <input type="text" name="descricao" placeholder="Descrição" required>
                 <input type="file" name="anexo" accept="image/*" required>
                 <button type="submit" name="action" value="cadastrar" class="botao botao-new-post">ADD NEW POST</button>

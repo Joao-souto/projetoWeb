@@ -146,4 +146,27 @@ class PublicacoesDAO
             return [];
         }
     }
+
+    public static function consultarPublicacaoComDadosUsuario($id_publicacao)
+    {
+        $conn = Conexao::getConexao();
+        if ($conn === null) {
+            return null;
+        }
+
+        // Adicionar um JOIN para obter o nome do usuário associado à publicação
+        $sql = "SELECT p.*, u.nome AS nome_usuario
+            FROM publicacoes p
+            JOIN usuarios u ON p.id_usuario = u.id_usuario
+            WHERE p.id_publicacao = ?";
+
+        try {
+            $stmt = $conn->prepare($sql);
+            $stmt->execute([$id_publicacao]);
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Erro ao obter publicação: " . $e->getMessage());
+            return null;
+        }
+    }
 }

@@ -14,7 +14,7 @@ $publicacoes = PublicacoesController::listarPublicacoesPorUsuario($idUsuario);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Profiles</title>
     <link rel="icon" href="../IMG/logoIcon.png" type="image/png">
     <link rel="stylesheet" href="../CSS/profiles.css">
     <script>
@@ -65,12 +65,14 @@ $publicacoes = PublicacoesController::listarPublicacoesPorUsuario($idUsuario);
         <section class="photo-gallery">
             <?php foreach ($publicacoes as $publicacao): ?>
                 <div class="photo-item">
-                    <!-- Exibindo a imagem se houver anexo -->
-                    <?php if ($publicacao['anexo']): ?>
-                        <img src="../IMG/<?php echo htmlspecialchars($publicacao['anexo']); ?>" alt="Imagem da publicação">
-                    <?php else: ?>
-                        <img src="../IMG/user.jpg" alt="Imagem padrão">
-                    <?php endif; ?>
+                    <!-- Adicionando o link para redirecionar ao view-post -->
+                    <a href="view-post.php?id=<?php echo $publicacao['id_publicacao']; ?>">
+                        <?php if ($publicacao['anexo']): ?>
+                            <img src="../IMG/<?php echo htmlspecialchars($publicacao['anexo']); ?>" alt="Imagem da publicação">
+                        <?php else: ?>
+                            <img src="../IMG/user.jpg" alt="Imagem padrão">
+                        <?php endif; ?>
+                    </a>
                     <div class="divEdit">
                         <p class="photo-caption"><?php echo htmlspecialchars($publicacao['descricao']); ?></p>
 
@@ -78,7 +80,7 @@ $publicacoes = PublicacoesController::listarPublicacoesPorUsuario($idUsuario);
                             <a href="edit-post.php?id=<?php echo $publicacao['id_publicacao']; ?>" class="edit-link" title="Editar publicação">
                                 ✏️
                             </a>
-                            <button class="delete-button" title="Excluir" onclick="window.location.href='delete-post.php?id=<?php echo $publicacao['id_publicacao']; ?>'">
+                            <button class="delete-button" title="Excluir" onclick="confirmDelete(<?php echo $publicacao['id_publicacao']; ?>)">
                                 🗑️
                             </button>
                         </div>
