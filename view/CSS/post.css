@@ -24,7 +24,7 @@ header {
 main {
     background-color: #424143;
     width: 82vw;
-    height: 100vh;
+    min-height: 100vh;  /* Garante que o elemento tenha pelo menos 100vh */
     margin-left: 18vw;
     padding: 2.5rem;
     overflow: hidden; /* Impede que o filho ultrapasse os limites */
@@ -70,6 +70,22 @@ input{
     width: auto;
 }
 .img-ampliada{
-    width: auto;
-    height: auto;
+    max-width: 70vw; /* Limita a largura máxima a 70% da largura da janela */
+    max-height: 80vh; /* Limita a altura máxima a 80% da altura da janela */
+    width: auto; /* Deixa a largura ajustar automaticamente */
+    height: auto; /* Deixa a altura ajustar automaticamente */
+}
+
+.message-box {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 5px;
+    text-align: center;
+}
+.div-edit{
+    display: flex;
+    flex-direction: column;
 }

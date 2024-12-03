@@ -67,25 +67,35 @@ class PublicacoesDAO
         }
     }
 
-    // Método para atualizar uma publicação
-    public static function atualizarPublicacao($id_publicacao, $descricao, $anexo = null, $status = self::STATUS_ATIVO)
+    public static function atualizarPublicacao($id_publicacao, $descricao, $anexo = null)
     {
         $conn = Conexao::getConexao();
         if ($conn === null) {
             return false;
         }
-
-        $sql = "UPDATE publicacoes SET descricao = ?, anexo = ?, status = ? WHERE id_publicacao = ?";
-
+    
+        // Ajusta o SQL dinamicamente para evitar alterações desnecessárias
+        $sql = "UPDATE publicacoes SET descricao = ?";
+        $params = [$descricao];
+    
+        if ($anexo !== null) {
+            $sql .= ", anexo = ?";
+            $params[] = $anexo;
+        }
+    
+        $sql .= " WHERE id_publicacao = ?";
+        $params[] = $id_publicacao;
+    
         try {
             $stmt = $conn->prepare($sql);
-            $stmt->execute([$descricao, $anexo, $status, $id_publicacao]);
+            $stmt->execute($params);
             return true;
         } catch (PDOException $e) {
             error_log("Erro ao atualizar publicação: " . $e->getMessage());
             return false;
         }
     }
+    
 
     // Método para excluir uma publicação
     public static function deletarPublicacao($id_publicacao)

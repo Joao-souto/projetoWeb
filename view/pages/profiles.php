@@ -6,6 +6,9 @@ $idUsuario = $_SESSION["id"]; // Obtendo o ID do usuário da sessão
 
 // Chama o método para listar as publicações de um usuário específico
 $publicacoes = PublicacoesController::listarPublicacoesPorUsuario($idUsuario);
+
+// Verifica se há uma mensagem na URL
+$message = $_GET['message'] ?? null;
 ?>
 
 <!DOCTYPE html>
@@ -54,6 +57,12 @@ $publicacoes = PublicacoesController::listarPublicacoesPorUsuario($idUsuario);
                 🔍
             </button>
         </div>
+
+        <?php if ($message): ?>
+            <div class="message-box">
+                <p><?php echo htmlspecialchars($message); ?></p>
+            </div>
+        <?php endif; ?>
 
         <div id="perfil">
             <img src="<?php echo $_SESSION['foto-perfil'] ?>" alt="Descrição da foto 1" id="fotoPerfil">
