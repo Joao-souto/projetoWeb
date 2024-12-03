@@ -5,6 +5,7 @@ require_once '/xampp/htdocs/projetoWeb/controller/PublicacoesController.php';
 $data = PublicacoesController::listarPublicacoesComTotal();
 $publicacoes = $data['publicacoes'];
 $total = $data['total'];
+
 ?>
 
 <!DOCTYPE html>
@@ -40,6 +41,12 @@ $total = $data['total'];
     <a href="./new-post.php" id="post-botao">NEW POST</a>
     <main>
         <h1>VSCO — For creators, by creators</h1>
+        <?php if (isset($_GET['success'])): ?>
+            <p class="mensagem-sucesso">Publicação deletada com sucesso!</p>
+        <?php elseif (isset($_GET['error'])): ?>
+            <p class="mensagem-erro">Ocorreu um erro ao deletar a publicação.</p>
+        <?php endif; ?>
+
 
         <section class="photo-gallery">
             <?php if ($total > 0): ?>

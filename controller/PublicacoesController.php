@@ -37,6 +37,7 @@ class PublicacoesController
     }
 
 
+
     public static function cadastrarPublicacao()
     {
         session_start();
@@ -88,6 +89,12 @@ class PublicacoesController
                 exit;
             }
         }
+    }
+
+
+    public static function deletarPublicacao($idPublicacao)
+    {
+        return PublicacoesDAO::deletarPublicacao($idPublicacao);
     }
 }
 

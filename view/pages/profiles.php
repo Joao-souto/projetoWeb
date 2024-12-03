@@ -2,7 +2,7 @@
 include("../../util/Protect.php");
 require_once '/xampp/htdocs/projetoWeb/controller/PublicacoesController.php'; // Inclusão do controller
 
-$idUsuario = $_SESSION["id"];  // Obtendo o ID do usuário da sessão
+$idUsuario = $_SESSION["id"]; // Obtendo o ID do usuário da sessão
 
 // Chama o método para listar as publicações de um usuário específico
 $publicacoes = PublicacoesController::listarPublicacoesPorUsuario($idUsuario);
@@ -17,6 +17,14 @@ $publicacoes = PublicacoesController::listarPublicacoesPorUsuario($idUsuario);
     <title>Home</title>
     <link rel="icon" href="../IMG/logoIcon.png" type="image/png">
     <link rel="stylesheet" href="../CSS/profiles.css">
+    <script>
+        function confirmDelete(id) {
+            if (confirm("Tem certeza de que deseja excluir esta publicação?")) {
+                // Redireciona para o script de exclusão com o ID da publicação
+                window.location.href = `delete-post.php?id=${id}`;
+            }
+        }
+    </script>
 </head>
 
 <body>
@@ -48,9 +56,9 @@ $publicacoes = PublicacoesController::listarPublicacoesPorUsuario($idUsuario);
         </div>
 
         <div id="perfil">
-            <img src="<?php echo $_SESSION['foto-perfil']?>" alt="Descrição da foto 1" id="fotoPerfil">
+            <img src="<?php echo $_SESSION['foto-perfil'] ?>" alt="Descrição da foto 1" id="fotoPerfil">
             <div id="userEmail">
-                <h1><?php echo $_SESSION['nome']?></h1>
+                <h1><?php echo $_SESSION['nome'] ?></h1>
                 <h2><?php echo $_SESSION['email'] ?></h2>
             </div>
         </div>
@@ -70,7 +78,7 @@ $publicacoes = PublicacoesController::listarPublicacoesPorUsuario($idUsuario);
                             <a href="edit-post.php?id=<?php echo $publicacao['id_publicacao']; ?>" class="edit-link" title="Editar publicação">
                                 ✏️
                             </a>
-                            <button class="delete-button" title="Excluir">
+                            <button class="delete-button" title="Excluir" onclick="window.location.href='delete-post.php?id=<?php echo $publicacao['id_publicacao']; ?>'">
                                 🗑️
                             </button>
                         </div>

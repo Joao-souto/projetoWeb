@@ -115,7 +115,7 @@ class PublicacoesDAO
             return [];
         }
 
-        $sql = "SELECT * FROM publicacoes ORDER BY data_publicacao ASC";
+        $sql = "SELECT * FROM publicacoes ORDER BY data_publicacao DESC";
 
         try {
             $stmt = $conn->prepare($sql); // Usando prepare() para segurança
