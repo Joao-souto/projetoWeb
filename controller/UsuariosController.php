@@ -48,5 +48,45 @@ class UsuariosController {
             return [];
         }
     }
+
+    // Método para atualizar os dados do usuário
+    public static function atualizarUsuario($idUsuario, $nome, $email, $senha, $fotoPerfil = null) {
+        try {
+            // Verifica o formato do e-mail
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                return "E-mail inválido.";
+            }
+    
+            // Busca o usuário atual pelo ID
+            $usuarioAtual = UsuariosDAO::consultarUsuarioId($idUsuario);
+    
+            if (!$usuarioAtual) {
+                return "Usuário não encontrado.";
+            }
+    
+            // Atualiza os dados do usuário
+            $usuarioAtual->setNome($nome);
+            $usuarioAtual->setEmail($email);
+            $usuarioAtual->setSenha($senha);
+    
+            // Atualiza a foto de perfil, se fornecida
+            if ($fotoPerfil !== null) {
+                $usuarioAtual->setFotoPerfil($fotoPerfil);
+            }
+    
+            // Atualiza o usuário no banco de dados
+            $resultado = UsuariosDAO::atualizarUsuario($usuarioAtual);
+    
+            if ($resultado) {
+                return "Perfil atualizado com sucesso!";
+            } else {
+                return "Erro ao atualizar o perfil.";
+            }
+        } catch (Exception $e) {
+            error_log("Erro na atualização de perfil: " . $e->getMessage());
+            return "Ocorreu um erro inesperado.";
+        }
+    }
+    
 }
 ?>

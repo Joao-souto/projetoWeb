@@ -65,11 +65,12 @@ $message = $_GET['message'] ?? null;
         <?php endif; ?>
 
         <div id="perfil">
-            <img src="<?php echo $_SESSION['foto-perfil'] ?>" alt="Descrição da foto 1" id="fotoPerfil">
+            <img src="<?php echo $_SESSION['foto-perfil'] ?>" id="fotoPerfil">
             <div id="userEmail">
                 <h1><?php echo $_SESSION['nome'] ?></h1>
                 <h2><?php echo $_SESSION['email'] ?></h2>
             </div>
+            <a href="edit-perfil.php?id=<?php echo $idUsuario; ?>" class="botao">✏️</a>
         </div>
         <section class="photo-gallery">
             <?php foreach ($publicacoes as $publicacao): ?>

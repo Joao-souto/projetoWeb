@@ -176,7 +176,8 @@ main {
 #fotoPerfil{
     height: 35vh;
     width: 17vw;
-    border: solid 5px black;
+    border: solid 4px black;
+    background-color: #555;
     border-radius: 50%;
 }
 #userEmail{

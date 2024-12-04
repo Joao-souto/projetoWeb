@@ -79,6 +79,35 @@ class UsuariosDAO {
             return null;
         }
     }
+    // Método para consultar um usuário
+    public static function consultarUsuarioId(int $idUsuario) {
+
+        $conn = Conexao::getConexao();
+        if ($conn === null) {
+            return null;
+        }
+    
+        $sql = "SELECT * FROM usuarios WHERE id_usuario = ?";
+    
+        try {
+            $stmt = $conn->prepare($sql);
+            $stmt->execute([$idUsuario]);
+            $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+            if ($resultado) {
+                $usuario = new Usuarios($resultado['nome'], $resultado['email'], $resultado['senha']);
+                $usuario->setIdUsuario($resultado['id_usuario']);
+                $usuario->setDataCriacao($resultado['data_criacao']);
+                $usuario->setFotoPerfil($resultado['foto_perfil']);
+                return $usuario;
+            } else {
+                return null; // Usuário não encontrado
+            }
+        } catch (PDOException $e) {
+            error_log("Erro ao obter usuário: " . $e->getMessage());
+            return null;
+        }
+    }
     
     // Método para atualizar um usuário
     public static function atualizarUsuario(Usuarios $usuario) {
