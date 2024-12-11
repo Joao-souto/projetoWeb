@@ -1,15 +1,13 @@
 <?php
+include("../../util/Protect.php");
 require_once '/xampp/htdocs/projetoWeb/controller/UsuariosController.php';
 require_once '/xampp/htdocs/projetoWeb/model/entidades/Usuarios.php';
 
-// Simula o ID do usuário (substitua com o ID real da sessão do usuário logado)
-$idUsuario = 1;
+$idUsuario = $_SESSION["id"];
 
 // Tratamento de envio do formulário
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nome = $_POST['nome'];
-    $email = $_POST['email'];
-    $senha = $_POST['senha'];
 
     // Trata o upload da nova foto, se enviada
     $nomeArquivoFoto = null;
@@ -45,10 +43,6 @@ $usuarioAtual = UsuariosDAO::consultarUsuarioId($idUsuario);
     <h1>Editar Perfil</h1>
     <form action="" method="POST" enctype="multipart/form-data">
         <input type="text" id="nome" name="nome" value="<?= htmlspecialchars($usuarioAtual->getNome()) ?>" placeholder="Nome" required><br>
-
-        <input type="email" id="email" name="email" value="<?= htmlspecialchars($usuarioAtual->getEmail()) ?>" placeholder="E-mail" required><br>
-
-        <input type="password" id="senha" name="senha" placeholder="Senha" required><br>
 
         <button type="submit">Salvar Alterações</button>
     </form>

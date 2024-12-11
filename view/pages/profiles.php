@@ -70,7 +70,7 @@ $message = $_GET['message'] ?? null;
                 <h1><?php echo $_SESSION['nome'] ?></h1>
                 <h2><?php echo $_SESSION['email'] ?></h2>
             </div>
-            <a href="edit-perfil.php?id=<?php echo $idUsuario; ?>" class="botao">✏️</a>
+            <a href="edit-perfil.php" class="botao">✏️</a>
         </div>
         <section class="photo-gallery">
             <?php foreach ($publicacoes as $publicacao): ?>
@@ -78,7 +78,7 @@ $message = $_GET['message'] ?? null;
                     <!-- Adicionando o link para redirecionar ao view-post -->
                     <a href="view-post.php?id=<?php echo $publicacao['id_publicacao']; ?>">
                         <?php if ($publicacao['anexo']): ?>
-                            <img src="../IMG/<?php echo htmlspecialchars($publicacao['anexo']); ?>" alt="Imagem da publicação">
+                            <img src="<?php echo htmlspecialchars($publicacao['anexo']); ?>" alt="Imagem da publicação">
                         <?php else: ?>
                             <img src="../IMG/user.jpg" alt="Imagem padrão">
                         <?php endif; ?>

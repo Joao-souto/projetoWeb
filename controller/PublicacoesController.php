@@ -61,11 +61,11 @@
                 if (isset($_FILES['anexo']) && $_FILES['anexo']['error'] === UPLOAD_ERR_OK) {
                     $extensao = pathinfo($_FILES['anexo']['name'], PATHINFO_EXTENSION); // Obtém a extensão do arquivo
                     $nomeArquivo = "publicacao_{$proximoId}." . $extensao; // Define o nome do arquivo
-                    $caminhoDestino = "../view/IMG/" . $nomeArquivo;
+                    $caminhoDestino = "../view/IMG/posts/" . $nomeArquivo;
 
                     // Tenta mover o arquivo para o caminho de destino
                     if (move_uploaded_file($_FILES['anexo']['tmp_name'], $caminhoDestino)) {
-                        $anexo = "../IMG/" . $nomeArquivo; // Caminho relativo para salvar no banco
+                        $anexo = "../IMG/posts/" . $nomeArquivo; // Caminho relativo para salvar no banco
                     } else {
                         echo "Erro ao salvar o arquivo.";
                         exit;

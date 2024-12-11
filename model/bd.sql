@@ -20,4 +20,4 @@ CREATE TABLE publicacoes (
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) ON DELETE CASCADE
 );
 
-INSERT INTO usuarios (nome, email, senha,foto_perfil) VALUES ('João Souto', 'joao.souto@gmail.com', 'senhaTeste1','../IMG/perfil1.jpg'), ('Gabriel Câmara', 'gabriel.camara@gmail.com', 'senhaTeste2','../IMG/perfil2.jpg'), ('Adriano', 'adriano@gmail.com', 'senhaTeste3','../IMG/perfil3.jpg'), ('Sarah', 'sarah@gmail.com', 'senhaTeste4','../IMG/perfil4.jpg');
+INSERT INTO usuarios (nome, email, senha,foto_perfil) VALUES ('João Souto', 'joao.souto@gmail.com', 'senhaTeste1','../IMG/profiles/perfil1.jpg');
