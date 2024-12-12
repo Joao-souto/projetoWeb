@@ -50,7 +50,7 @@ class UsuariosController {
     }
 
     // Método para atualizar os dados do usuário
-    public static function atualizarUsuario($idUsuario, $nome, $email, $senha, $fotoPerfil = null) {
+    public static function atualizarUsuario($idUsuario, $nome, $email, $senha = null, $fotoPerfil = null) {
         try {
             // Verifica o formato do e-mail
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -87,6 +87,6 @@ class UsuariosController {
             return "Ocorreu um erro inesperado.";
         }
     }
-    
+
 }
 ?>

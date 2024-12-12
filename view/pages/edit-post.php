@@ -40,7 +40,6 @@ if (!$publicacao) {
                 <input type="file" name="anexo" id="anexo">
             </div>
             <?php if ($publicacao['anexo']): ?>
-                <p>Imagem atual:</p>
                 <img src="<?php echo htmlspecialchars($publicacao['anexo']); ?>" alt="Imagem atual" width="200" class="img-ampliada">
             <?php endif; ?>
             <button type="submit" name="action" value="atualizar" class="botao">Salvar Alterações</button>
