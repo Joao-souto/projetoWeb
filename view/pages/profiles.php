@@ -87,9 +87,43 @@ $message = $_GET['message'] ?? null;
                         <p class="photo-caption"><?php echo htmlspecialchars($publicacao['descricao']); ?></p>
 
                         <div>
-                            <a href="edit-post.php?id=<?php echo $publicacao['id_publicacao']; ?>" class="edit-link" title="Editar publicação">
+                            <a href="edit-post.php" class="edit-link" title="Editar publicação" data-id=<?php echo $publicacao['id_publicacao']; ?>>
                                 ✏️
                             </a>
+
+                            <script>
+                                document.addEventListener("DOMContentLoaded", function() {
+                                    const editLinks = document.querySelectorAll('.edit-link');
+
+                                    editLinks.forEach(link => {
+                                        link.addEventListener('click', function(event) {
+                                            event.preventDefault(); // Impede o comportamento padrão do link
+
+                                            // Obtém o ID da publicação do atributo data-id
+                                            const idPublicacao = this.getAttribute('data-id');
+                                            const href = this.getAttribute('href');
+
+                                            // Cria um formulário dinâmico
+                                            const form = document.createElement('form');
+                                            form.method = 'POST';
+                                            form.action = href;
+
+                                            // Adiciona um campo oculto com o ID da publicação
+                                            const input = document.createElement('input');
+                                            input.type = 'hidden';
+                                            input.name = 'id';
+                                            input.value = idPublicacao;
+
+                                            form.appendChild(input);
+
+                                            // Adiciona o formulário ao corpo e o submete
+                                            document.body.appendChild(form);
+                                            form.submit();
+                                        });
+                                    });
+                                });
+                            </script>
+
                             <button class="delete-button" title="Excluir" onclick="confirmDelete(<?php echo $publicacao['id_publicacao']; ?>)">
                                 🗑️
                             </button>

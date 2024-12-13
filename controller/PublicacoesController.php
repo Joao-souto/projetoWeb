@@ -93,6 +93,7 @@
             try {
                 // Chama o método do DAO para obter a publicação
                 return PublicacoesDAO::consultarPublicacao($id_publicacao);
+                
             } catch (Exception $e) {
                 error_log("Erro ao consultar publicação: " . $e->getMessage());
                 return null;

@@ -2,16 +2,16 @@
 include("../../util/Protect.php");
 require_once '/xampp/htdocs/projetoWeb/controller/PublicacoesController.php';
 
-$idPublicacao = $_GET['id'] ?? null;
+$idPublicacao = $_POST['id'] ?? null;
 
-if (!$idPublicacao) {
+if (empty($idPublicacao)) {
     echo "ID da publicação não fornecido.";
     exit;
 }
 
 $publicacao = PublicacoesController::consultarPublicacao($idPublicacao);
 
-if (!$publicacao) {
+if (empty($publicacao['id_publicacao'])) {
     echo "Publicação não encontrada.";
     exit;
 }
@@ -31,7 +31,7 @@ if (!$publicacao) {
     <header>
         <a href="profiles.php" class="botao">Voltar</a>
     </header>
-    <main>
+    <main>  
         <h1>Editar Publicação</h1>
         <form action="update-post.php" method="post" enctype="multipart/form-data">
             <input type="hidden" name="id_publicacao" value="<?php echo $publicacao['id_publicacao']; ?>">
