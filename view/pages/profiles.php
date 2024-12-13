@@ -27,6 +27,13 @@ $message = $_GET['message'] ?? null;
                 window.location.href = `delete-post.php?id=${id}`;
             }
         }
+
+        function confirmDeleteUser(id) {
+            if (confirm("Tem certeza de que deseja excluir seu perfil?")) {
+                // Redireciona para o script de exclusão com o ID da publicação
+                window.location.href = `delete-perfil.php?id=${id}`;
+            }
+        }
     </script>
 </head>
 
@@ -51,17 +58,17 @@ $message = $_GET['message'] ?? null;
     </header>
     <a href="./new-post.php" id="postBotao">NEW POST</a>
     <main>
-        <div class="search-container">
-            <input type="text" placeholder="Pesquisar usuários..." class="search-input">
-            <button class="search-button">
-                🔍
-            </button>
-        </div>
 
         <?php if ($message): ?>
             <div class="message-box">
                 <p><?php echo htmlspecialchars($message); ?></p>
             </div>
+        <?php endif; ?>
+
+        <?php if (isset($_GET['success'])): ?>
+            <p class="mensagem-sucesso">Publicação deletada com sucesso!</p>
+        <?php elseif (isset($_GET['error'])): ?>
+            <p class="mensagem-erro">Ocorreu um erro ao deletar a publicação.</p>
         <?php endif; ?>
 
         <div id="perfil">
@@ -71,6 +78,9 @@ $message = $_GET['message'] ?? null;
                 <h2><?php echo $_SESSION['email'] ?></h2>
             </div>
             <a href="edit-perfil.php" class="botao">✏️</a>
+            <button class="delete-button" title="Excluir" onclick="confirmDeleteUser(<?php echo $_SESSION['id']; ?>)">
+                🗑️
+            </button>
         </div>
         <section class="photo-gallery">
             <?php foreach ($publicacoes as $publicacao): ?>

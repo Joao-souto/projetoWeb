@@ -70,47 +70,6 @@ main {
     padding: 2rem;
 }
 
-/* Estilo geral do container */
-.search-container {
-    display: flex;
-    align-items: center;
-    justify-content: start;
-}
-
-/* Estilo do input */
-.search-input {
-    width: 300px;
-    padding: 10px 15px;
-    border: 2px solid #ccc;
-    border-radius: 25px 0 0 25px;
-    outline: none;
-    font-size: 16px;
-    color: black;
-    transition: border-color 0.3s;
-}
-
-/* Foco no input */
-.search-input:focus {
-    border-color:#2e2d30;
-}
-
-/* Estilo do botão */
-.search-button {
-    padding: 10px 15px;
-    background-color: white;
-    border: none;
-    color: black;
-    cursor: pointer;
-    border-radius: 0 25px 25px 0;
-    font-size: 16px;
-    transition: background-color 0.3s;
-}
-
-/* Hover no botão */
-.search-button:hover {
-    background-color: #555;
-}
-
 
 .photo-gallery {
     display: grid;

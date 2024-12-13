@@ -34,11 +34,15 @@ if (!$publicacao) {
     <header>
         <a href="home.php" class="botao">FEED</a>
         <a href="new-post.php" class="botao">NEW POST</a>
+        <a href="<?php echo $_SERVER['HTTP_REFERER'] ?? '#'; ?>" class="botao">VOLTAR</a>
     </header>
     <main>
         <img src="<?php echo $publicacao['anexo']; ?>" alt="Imagem da Publicação" class="img-ampliada">
-        <h3>@<?php echo htmlspecialchars($publicacao['nome_usuario']); ?></h3>
         <p><?php echo htmlspecialchars($publicacao['descricao']); ?></p>
+        <div id="div-foto-perfil">
+            <img src="<?php echo $publicacao['foto_user']; ?>" id="foto-perfil"></img>
+            <h4>@<?php echo htmlspecialchars($publicacao['nome_usuario']); ?></h4>
+        </div>
     </main>
 </body>
 

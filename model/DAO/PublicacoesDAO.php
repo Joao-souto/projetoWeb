@@ -165,7 +165,7 @@ class PublicacoesDAO
         }
 
         // Adicionar um JOIN para obter o nome do usuário associado à publicação
-        $sql = "SELECT p.*, u.nome AS nome_usuario
+        $sql = "SELECT p.*, u.nome AS nome_usuario, u.foto_perfil AS foto_user
             FROM publicacoes p
             JOIN usuarios u ON p.id_usuario = u.id_usuario
             WHERE p.id_publicacao = ?";
