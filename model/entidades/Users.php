@@ -1,5 +1,5 @@
 <?php
-class Usuarios {
+class Users {
     // Atributos
     private $idUsuario;
     private $nome;
@@ -14,14 +14,6 @@ class Usuarios {
         $this->nome = $nome;
         $this->email = $email;
         $this->senha = $senha;
-    }
-
-    // Método para visualizar usuário
-    public function visualizarUsuario(){
-        echo "id_usuario: " . $this->idUsuario;
-        echo "nome: " . $this->nome;
-        echo "email: " . $this->email;
-        echo "senha: " . $this->senha;
     }
 
     // Getters e Setters

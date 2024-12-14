@@ -1,19 +1,19 @@
 <?php
 include("../../util/Protect.php");
-require_once '/xampp/htdocs/projetoWeb/controller/PublicacoesController.php';
+require_once '/xampp/htdocs/projetoWeb/controller/PublicationsController.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id'])) {
 
-    function apagarImagem(){
+    function deleteImage(){
         $idPublicacao = intval($_GET['id']);
-        $publicacao = PublicacoesController::consultarPublicacao($idPublicacao);
+        $publicacao = PublicationsController::getPublicationById($idPublicacao);
         $imagem = $publicacao['anexo'];
 
         // Verifica se o arquivo existe
         if (file_exists($imagem)) {
             // Tenta deletar o arquivo
             if (unlink($imagem)) {
-                PublicacoesController::deletarPublicacao($idPublicacao);
+                PublicationsController::deletePublication($idPublicacao);
                 return true;
             } else {
                 return false;
@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id'])) {
     }
 
 
-    if (apagarImagem()) {
+    if (deleteImage()) {
         // Redireciona para a home com a mensagem de sucesso
         header("Location: home.php?success=1");
     } else {

@@ -1,11 +1,11 @@
 <?php
 include("../../util/Protect.php");
-require_once '/xampp/htdocs/projetoWeb/controller/PublicacoesController.php'; // Inclusão do controller
+require_once '/xampp/htdocs/projetoWeb/controller/PublicationsController.php'; // Inclusão do controller
 
 $idUsuario = $_SESSION["id"]; // Obtendo o ID do usuário da sessão
 
 // Chama o método para listar as publicações de um usuário específico
-$publicacoes = PublicacoesController::listarPublicacoesPorUsuario($idUsuario);
+$publicacoes = PublicationsController::getPublicationsByUser($idUsuario);
 
 // Verifica se há uma mensagem na URL
 $message = $_GET['message'] ?? null;
@@ -24,14 +24,14 @@ $message = $_GET['message'] ?? null;
         function confirmDelete(id) {
             if (confirm("Tem certeza de que deseja excluir esta publicação?")) {
                 // Redireciona para o script de exclusão com o ID da publicação
-                window.location.href = `delete-post.php?id=${id}`;
+                window.location.href = `delete-publication.php?id=${id}`;
             }
         }
 
         function confirmDeleteUser(id) {
             if (confirm("Tem certeza de que deseja excluir seu perfil?")) {
-                // Redireciona para o script de exclusão com o ID da publicação
-                window.location.href = `delete-perfil.php?id=${id}`;
+                // Redireciona para o script de exclusão com o ID do usuário
+                window.location.href = `delete-profile.php?id=${id}`;
             }
         }
     </script>
@@ -56,7 +56,7 @@ $message = $_GET['message'] ?? null;
         </a>
         <a href="../../controller/logout.php" class="botao">EXIT</a>
     </header>
-    <a href="./new-post.php" id="postBotao">NEW POST</a>
+    <a href="./new-publication.php" id="postBotao">NEW POST</a>
     <main>
 
         <?php if ($message): ?>
@@ -66,9 +66,9 @@ $message = $_GET['message'] ?? null;
         <?php endif; ?>
 
         <?php if (isset($_GET['success'])): ?>
-            <p class="mensagem-sucesso">Publicação deletada com sucesso!</p>
+            <p class="mensagem-sucesso">Post deleted successfully!</p>
         <?php elseif (isset($_GET['error'])): ?>
-            <p class="mensagem-erro">Ocorreu um erro ao deletar a publicação.</p>
+            <p class="mensagem-erro">An error occurred while deleting the post.</p>
         <?php endif; ?>
 
         <div id="perfil">
@@ -77,7 +77,7 @@ $message = $_GET['message'] ?? null;
                 <h1><?php echo $_SESSION['nome'] ?></h1>
                 <h2><?php echo $_SESSION['email'] ?></h2>
             </div>
-            <a href="edit-perfil.php" class="botao">✏️</a>
+            <a href="edit-profile.php" class="botao">✏️</a>
             <button class="delete-button" title="Excluir" onclick="confirmDeleteUser(<?php echo $_SESSION['id']; ?>)">
                 🗑️
             </button>
@@ -85,8 +85,7 @@ $message = $_GET['message'] ?? null;
         <section class="photo-gallery">
             <?php foreach ($publicacoes as $publicacao): ?>
                 <div class="photo-item">
-                    <!-- Adicionando o link para redirecionar ao view-post -->
-                    <a href="view-post.php?id=<?php echo $publicacao['id_publicacao']; ?>">
+                    <a href="view-publication.php?id=<?php echo $publicacao['id_publicacao']; ?>">
                         <?php if ($publicacao['anexo']): ?>
                             <img src="<?php echo htmlspecialchars($publicacao['anexo']); ?>" alt="Imagem da publicação">
                         <?php else: ?>
@@ -97,7 +96,7 @@ $message = $_GET['message'] ?? null;
                         <p class="photo-caption"><?php echo htmlspecialchars($publicacao['descricao']); ?></p>
 
                         <div>
-                            <a href="edit-post.php" class="edit-link" title="Editar publicação" data-id=<?php echo $publicacao['id_publicacao']; ?>>
+                            <a href="edit-publication.php" class="edit-link" title="Editar publicação" data-id=<?php echo $publicacao['id_publicacao']; ?>>
                                 ✏️
                             </a>
 

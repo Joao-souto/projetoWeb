@@ -1,13 +1,13 @@
 <?php
 include("../../util/Protect.php");
-require_once '/xampp/htdocs/projetoWeb/controller/PublicacoesController.php';
+require_once '/xampp/htdocs/projetoWeb/controller/PublicationsController.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $idPublicacao = $_POST['id_publicacao'] ?? null;
     $descricao = $_POST['descricao'] ?? null;
 
     if ($idPublicacao && $descricao) {
-        $resultado = PublicacoesController::atualizarPublicacao($idPublicacao, $descricao, $_FILES);
+        $resultado = PublicationsController::updatePublication($idPublicacao, $descricao, $_FILES);
 
         if ($resultado) {
             header("Location: profiles.php?message=Publicação atualizada com sucesso!");

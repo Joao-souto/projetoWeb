@@ -1,6 +1,6 @@
 <?php
 include("../../util/Protect.php");
-require_once '/xampp/htdocs/projetoWeb/controller/PublicacoesController.php';
+require_once '/xampp/htdocs/projetoWeb/controller/PublicationsController.php';
 
 // Verifica se o ID foi enviado via GET
 $id_publicacao = $_GET['id'] ?? null;
@@ -11,7 +11,7 @@ if (!$id_publicacao) {
 }
 
 // Busca os dados da publicação
-$publicacao = PublicacoesController::consultarPublicacaoComDadosUsuario($id_publicacao);
+$publicacao = PublicationsController::getPublicationAndUser($id_publicacao);
 
 if (!$publicacao) {
     echo "Publicação não encontrada.";
@@ -25,16 +25,16 @@ if (!$publicacao) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VSCO2 - Publicação</title>
+    <title>VSCO2 - Publication</title>
     <link rel="icon" href="../IMG/logoIcon.png" type="image/png">
-    <link rel="stylesheet" href="../CSS/post.css">
+    <link rel="stylesheet" href="../CSS/publication.css">
 </head>
 
 <body>
     <header>
         <a href="home.php" class="botao">FEED</a>
-        <a href="new-post.php" class="botao">NEW POST</a>
-        <a href="<?php echo $_SERVER['HTTP_REFERER'] ?? '#'; ?>" class="botao">VOLTAR</a>
+        <a href="new-publication.php" class="botao">NEW POST</a>
+        <a href="<?php echo $_SERVER['HTTP_REFERER'] ?? '#'; ?>" class="botao">BACK</a>
     </header>
     <main>
         <img src="<?php echo $publicacao['anexo']; ?>" alt="Imagem da Publicação" class="img-ampliada">

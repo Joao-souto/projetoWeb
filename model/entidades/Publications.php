@@ -1,5 +1,5 @@
 <?php
-class Publicacoes {
+class Publications {
      // atributos
     private $idPublicacao;
     private $idUsuario;

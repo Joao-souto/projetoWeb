@@ -1,7 +1,7 @@
 <?php
-require_once '/xampp/htdocs/projetoWeb/util/Conexao.php';
-require_once '/xampp/htdocs/projetoWeb/model/entidades/Publicacoes.php';
-class PublicacoesDAO
+require_once '/xampp/htdocs/projetoWeb/util/Connection.php';
+require_once '/xampp/htdocs/projetoWeb/model/entidades/Publications.php';
+class PublicationsDAO
 {
     // Constantes para status
     const STATUS_ATIVO = 'ativo';
@@ -9,9 +9,9 @@ class PublicacoesDAO
     const STATUS_PENDENTE = 'pendente';
 
     // Método para criar uma nova publicação
-    public static function cadastrarPublicacao($id_usuario, $descricao, $anexo = null, $status = self::STATUS_ATIVO)
+    public static function createPublication($id_usuario, $descricao, $anexo = null, $status = self::STATUS_ATIVO)
     {
-        $conn = Conexao::getConexao(); // Obtemos a conexão
+        $conn = Connection::getConnection(); // Obtemos a conexão
         if ($conn === null) {
             return false;
         }
@@ -29,9 +29,9 @@ class PublicacoesDAO
     }
 
     // Método para obter uma publicação pelo ID
-    public static function consultarPublicacao($id_publicacao)
+    public static function getPublicationById($id_publicacao)
     {
-        $conn = Conexao::getConexao();
+        $conn = Connection::getConnection();
         if ($conn === null) {
             return null;
         }
@@ -48,9 +48,10 @@ class PublicacoesDAO
         }
     }
 
-    public static function obterProximoIdPublicacao()
+    // Método que retorna o id da próxima publicação
+    public static function getNextPublicationId()
     {
-        $conn = Conexao::getConexao();
+        $conn = Connection::getConnection();
         if ($conn === null) {
             return null;
         }
@@ -67,60 +68,10 @@ class PublicacoesDAO
         }
     }
 
-    public static function atualizarPublicacao($id_publicacao, $descricao, $anexo = null)
-    {
-        $conn = Conexao::getConexao();
-        if ($conn === null) {
-            return false;
-        }
-    
-        // Ajusta o SQL dinamicamente para evitar alterações desnecessárias
-        $sql = "UPDATE publicacoes SET descricao = ?";
-        $params = [$descricao];
-    
-        if ($anexo !== null) {
-            $sql .= ", anexo = ?";
-            $params[] = $anexo;
-        }
-    
-        $sql .= " WHERE id_publicacao = ?";
-        $params[] = $id_publicacao;
-    
-        try {
-            $stmt = $conn->prepare($sql);
-            $stmt->execute($params);
-            return true;
-        } catch (PDOException $e) {
-            error_log("Erro ao atualizar publicação: " . $e->getMessage());
-            return false;
-        }
-    }
-    
-
-    // Método para excluir uma publicação
-    public static function deletarPublicacao($id_publicacao)
-    {
-        $conn = Conexao::getConexao();
-        if ($conn === null) {
-            return false;
-        }
-
-        $sql = "DELETE FROM publicacoes WHERE id_publicacao = ?";
-
-        try {
-            $stmt = $conn->prepare($sql);
-            $stmt->execute([$id_publicacao]);
-            return true;
-        } catch (PDOException $e) {
-            error_log("Erro ao excluir publicação: " . $e->getMessage());
-            return false;
-        }
-    }
-
     // Método para listar todas as publicações
-    public static function listarPublicacoes()
+    public static function getAllPublications()
     {
-        $conn = Conexao::getConexao();
+        $conn = Connection::getConnection();
         if ($conn === null) {
             return [];
         }
@@ -138,9 +89,9 @@ class PublicacoesDAO
     }
 
     // Método para listar publicações de um usuário específico
-    public static function listarPublicacoesPorUsuario($id_usuario)
+    public static function getPublicationsByUser($id_usuario)
     {
-        $conn = Conexao::getConexao();
+        $conn = Connection::getConnection();
         if ($conn === null) {
             return [];
         }
@@ -157,9 +108,10 @@ class PublicacoesDAO
         }
     }
 
-    public static function consultarPublicacaoComDadosUsuario($id_publicacao)
+    // Método para obter dados da publicação e usuário
+    public static function getPublicationAndUser($id_publicacao)
     {
-        $conn = Conexao::getConexao();
+        $conn = Connection::getConnection();
         if ($conn === null) {
             return null;
         }
@@ -177,6 +129,56 @@ class PublicacoesDAO
         } catch (PDOException $e) {
             error_log("Erro ao obter publicação: " . $e->getMessage());
             return null;
+        }
+    }
+
+    // Método para atualizar uma publicação
+    public static function updatePublication($id_publicacao, $descricao, $anexo = null)
+    {
+        $conn = Connection::getConnection();
+        if ($conn === null) {
+            return false;
+        }
+
+        // Ajusta o SQL dinamicamente para evitar alterações desnecessárias
+        $sql = "UPDATE publicacoes SET descricao = ?";
+        $params = [$descricao];
+
+        if ($anexo !== null) {
+            $sql .= ", anexo = ?";
+            $params[] = $anexo;
+        }
+
+        $sql .= " WHERE id_publicacao = ?";
+        $params[] = $id_publicacao;
+
+        try {
+            $stmt = $conn->prepare($sql);
+            $stmt->execute($params);
+            return true;
+        } catch (PDOException $e) {
+            error_log("Erro ao atualizar publicação: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    // Método para excluir uma publicação
+    public static function deletePublication($id_publicacao)
+    {
+        $conn = Connection::getConnection();
+        if ($conn === null) {
+            return false;
+        }
+
+        $sql = "DELETE FROM publicacoes WHERE id_publicacao = ?";
+
+        try {
+            $stmt = $conn->prepare($sql);
+            $stmt->execute([$id_publicacao]);
+            return true;
+        } catch (PDOException $e) {
+            error_log("Erro ao excluir publicação: " . $e->getMessage());
+            return false;
         }
     }
 }

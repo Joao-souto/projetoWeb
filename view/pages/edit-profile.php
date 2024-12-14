@@ -1,12 +1,12 @@
 <?php
 include("../../util/Protect.php");
-require_once '/xampp/htdocs/projetoWeb/controller/UsuariosController.php';
-require_once '/xampp/htdocs/projetoWeb/model/entidades/Usuarios.php';
+require_once '/xampp/htdocs/projetoWeb/controller/UsersController.php';
+require_once '/xampp/htdocs/projetoWeb/model/entidades/Users.php';
 
 $idUsuario = $_SESSION["id"];
 
 // Obtém os dados atuais do usuário
-$usuarioAtual = UsuariosDAO::consultarUsuarioId($idUsuario);
+$usuarioAtual = UsersDAO::getUserById($idUsuario);
 ?>
 
 <!DOCTYPE html>
@@ -15,13 +15,13 @@ $usuarioAtual = UsuariosDAO::consultarUsuarioId($idUsuario);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../CSS/edit-perfil.css">
-    <title>Editar Perfil</title>
+    <link rel="stylesheet" href="../CSS/edit-profile.css">
+    <title>Edit Profile</title>
 </head>
 
 <body>
-    <h1>Editar Perfil</h1>
-    <form action="update-perfil.php" method="POST" enctype="multipart/form-data">
+    <h1>Edit Profile</h1>
+    <form action="update-profile.php" method="POST" enctype="multipart/form-data">
 
         <div class="edit-perfil">
         <?php
@@ -41,7 +41,7 @@ $usuarioAtual = UsuariosDAO::consultarUsuarioId($idUsuario);
             </div>
         </div>
 
-        <button type="submit">Salvar Alterações</button>
+        <button type="submit">Save Changes</button>
     </form>
 </body>
 

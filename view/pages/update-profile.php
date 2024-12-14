@@ -1,7 +1,7 @@
 <?php
 include("../../util/Protect.php");
-require_once '/xampp/htdocs/projetoWeb/controller/UsuariosController.php';
-require_once '/xampp/htdocs/projetoWeb/model/DAO/UsuariosDAO.php';
+require_once '/xampp/htdocs/projetoWeb/controller/UsersController.php';
+require_once '/xampp/htdocs/projetoWeb/model/DAO/UsersDAO.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $idUsuario = $_SESSION['id'] ?? null;
@@ -22,10 +22,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
 
-        $resultado = UsuariosController::atualizarUsuario($idUsuario, $nome, $email, $_SESSION["senha"], $fotoPerfil);
+        $resultado = UsersController::updateUser($idUsuario, $nome, $email, $_SESSION["senha"], $fotoPerfil);
 
         if ($resultado) {
-            $usuario = UsuariosDAO::consultarUsuarioId($_SESSION["id"]);
+            $usuario = UsersDAO::getUserById($_SESSION["id"]);
             $_SESSION["foto-perfil"] = $usuario->getFotoPerfil();
             $_SESSION["nome"] = $nome;
             header("Location: profiles.php?message=Perfil atualizado com sucesso!");

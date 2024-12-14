@@ -1,17 +1,19 @@
 <?php
-require_once '/xampp/htdocs/projetoWeb/util/Conexao.php';
-require_once '/xampp/htdocs/projetoWeb/model/entidades/Usuarios.php';
+require_once '/xampp/htdocs/projetoWeb/util/Connection.php';
+require_once '/xampp/htdocs/projetoWeb/model/entidades/Users.php';
 
-class UsuariosDAO {
+class UsersDAO
+{
     // Método para criar um novo usuário
-    public static function cadastrarUsuario(Usuarios $usuario) {
-        $conn = Conexao::getConexao(); // Obtemos a conexão
+    public static function createUser(Users $usuario)
+    {
+        $conn = Connection::getConnection(); // Obtemos a conexão
         if ($conn === null) {
             return false;
         }
-        
+
         $sql = "INSERT INTO usuarios (nome, email, senha, foto_perfil) VALUES (?, ?, ?, ?)";
-        
+
         try {
             $stmt = $conn->prepare($sql);
             $stmt->execute([
@@ -27,15 +29,48 @@ class UsuariosDAO {
         }
     }
 
-    // Método para consultar ID de usuário
-    public static function consultarIdUsuario(Usuarios $usuario) {
-        $conn = Conexao::getConexao();
+    // Método para verificar login válido
+    public static function isValidLogin($email, $senha)
+    {
+        $conn = Connection::getConnection();
         if ($conn === null) {
             return null;
         }
-    
+
+        $sql = "SELECT * FROM usuarios WHERE email = ? AND senha = ?";
+
+        try {
+            $stmt = $conn->prepare($sql);
+            $stmt->execute([$email, $senha]);
+            $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($resultado) {
+                $usuario = new Users($resultado['nome'], $resultado['email'], $resultado['senha']);
+                $usuario->setIdUsuario($resultado['id_usuario']);
+                $usuario->setDataCriacao($resultado['data_criacao']);
+                $usuario->setFotoPerfil($resultado['foto_perfil']);
+                $usuario->setLoginValido(true);
+
+                return $usuario;
+            } else {
+                return null;
+            }
+        } catch (PDOException $e) {
+            error_log("Erro ao verificar login: " . $e->getMessage());
+            return null;
+        }
+    }
+
+    // Método para consultar ID de usuário
+    public static function getIdUser(Users $usuario)
+    {
+        $conn = Connection::getConnection();
+        if ($conn === null) {
+            return null;
+        }
+
         $sql = "SELECT id_usuario FROM usuarios WHERE email = ?";
-    
+
         try {
             $stmt = $conn->prepare($sql);
             $stmt->execute([$usuario->getEmail()]);
@@ -48,25 +83,26 @@ class UsuariosDAO {
     }
 
     // Método para consultar um usuário
-    public static function consultarUsuario(Usuarios $usuario) {
+    public static function getUser(Users $usuario)
+    {
         if ($usuario->getIdUsuario() == 0) {
-            $usuario->setIdUsuario(self::consultarIdUsuario($usuario));
+            $usuario->setIdUsuario(self::getIdUser($usuario));
         }
 
-        $conn = Conexao::getConexao();
+        $conn = Connection::getConnection();
         if ($conn === null) {
             return null;
         }
-    
+
         $sql = "SELECT * FROM usuarios WHERE id_usuario = ?";
-    
+
         try {
             $stmt = $conn->prepare($sql);
             $stmt->execute([$usuario->getIdUsuario()]);
             $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
-    
+
             if ($resultado) {
-                $usuario = new Usuarios($resultado['nome'], $resultado['email'], $resultado['senha']);
+                $usuario = new Users($resultado['nome'], $resultado['email'], $resultado['senha']);
                 $usuario->setIdUsuario($resultado['id_usuario']);
                 $usuario->setDataCriacao($resultado['data_criacao']);
                 $usuario->setFotoPerfil($resultado['foto_perfil']);
@@ -79,23 +115,25 @@ class UsuariosDAO {
             return null;
         }
     }
-    // Método para consultar um usuário
-    public static function consultarUsuarioId(int $idUsuario) {
 
-        $conn = Conexao::getConexao();
+    // Método para consultar um usuário pelo id
+    public static function getUserById(int $idUsuario)
+    {
+
+        $conn = Connection::getConnection();
         if ($conn === null) {
             return null;
         }
-    
+
         $sql = "SELECT * FROM usuarios WHERE id_usuario = ?";
-    
+
         try {
             $stmt = $conn->prepare($sql);
             $stmt->execute([$idUsuario]);
             $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
-    
+
             if ($resultado) {
-                $usuario = new Usuarios($resultado['nome'], $resultado['email'], $resultado['senha']);
+                $usuario = new Users($resultado['nome'], $resultado['email'], $resultado['senha']);
                 $usuario->setIdUsuario($resultado['id_usuario']);
                 $usuario->setDataCriacao($resultado['data_criacao']);
                 $usuario->setFotoPerfil($resultado['foto_perfil']);
@@ -108,20 +146,41 @@ class UsuariosDAO {
             return null;
         }
     }
-    
-    // Método para atualizar um usuário
-    public static function atualizarUsuario(Usuarios $usuario) {
-        if ($usuario->getIdUsuario() == 0) {
-            $usuario->setIdUsuario(self::consultarIdUsuario($usuario));
+
+    // Método para listar todos os usuários
+    public static function getAllUsers()
+    {
+        $conn = Connection::getConnection();
+        if ($conn === null) {
+            return [];
         }
 
-        $conn = Conexao::getConexao();
+        $sql = "SELECT * FROM usuarios";
+
+        try {
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Erro ao listar usuários: " . $e->getMessage());
+            return [];
+        }
+    }
+
+    // Método para atualizar um usuário
+    public static function updateUser(Users $usuario)
+    {
+        if ($usuario->getIdUsuario() == 0) {
+            $usuario->setIdUsuario(self::getIdUser($usuario));
+        }
+
+        $conn = Connection::getConnection();
         if ($conn === null) {
             return false;
         }
 
         $sql = "UPDATE usuarios SET nome = ?, email = ?, senha = ?, foto_perfil = ? WHERE id_usuario = ?";
-        
+
         try {
             $stmt = $conn->prepare($sql);
             $stmt->execute([
@@ -139,18 +198,19 @@ class UsuariosDAO {
     }
 
     // Método para excluir um usuário
-    public static function excluirUsuario(Usuarios $usuario) {
+    public static function deleteUser(Users $usuario)
+    {
         if ($usuario->getIdUsuario() == 0) {
-            $usuario->setIdUsuario(self::consultarIdUsuario($usuario));
+            $usuario->setIdUsuario(self::getIdUser($usuario));
         }
 
-        $conn = Conexao::getConexao();
+        $conn = Connection::getConnection();
         if ($conn === null) {
             return false;
         }
 
         $sql = "DELETE FROM usuarios WHERE id_usuario = ?";
-        
+
         try {
             $stmt = $conn->prepare($sql);
             $stmt->execute([$usuario->getIdUsuario()]);
@@ -160,55 +220,4 @@ class UsuariosDAO {
             return false;
         }
     }
-
-    // Método para listar todos os usuários
-    public static function listarUsuarios() {
-        $conn = Conexao::getConexao();
-        if ($conn === null) {
-            return [];
-        }
-
-        $sql = "SELECT * FROM usuarios";
-        
-        try {
-            $stmt = $conn->prepare($sql);
-            $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            error_log("Erro ao listar usuários: " . $e->getMessage());
-            return [];
-        }
-    }
-
-    // Método para verificar login válido
-    public static function loginValido($email, $senha) {
-        $conn = Conexao::getConexao();
-        if ($conn === null) {
-            return null;
-        }
-    
-        $sql = "SELECT * FROM usuarios WHERE email = ? AND senha = ?";
-        
-        try {
-            $stmt = $conn->prepare($sql);
-            $stmt->execute([$email, $senha]);
-            $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
-    
-            if ($resultado) {
-                $usuario = new Usuarios($resultado['nome'], $resultado['email'], $resultado['senha']);
-                $usuario->setIdUsuario($resultado['id_usuario']);
-                $usuario->setDataCriacao($resultado['data_criacao']);
-                $usuario->setFotoPerfil($resultado['foto_perfil']);
-                $usuario->setLoginValido(true);
-
-                return $usuario;
-            } else {
-                return null;
-            }
-        } catch (PDOException $e) {
-            error_log("Erro ao verificar login: " . $e->getMessage());
-            return null;
-        }
-    }
 }
-?>

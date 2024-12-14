@@ -1,6 +1,6 @@
 <?php
-class Conexao {
-    public static function getConexao() {
+class Connection {
+    public static function getConnection() {
         $servername = "localhost";
         $username = "root";
         $password = "";

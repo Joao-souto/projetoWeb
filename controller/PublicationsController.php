@@ -1,41 +1,11 @@
     <?php
-    require_once '/xampp/htdocs/projetoWeb/model/DAO/PublicacoesDAO.php';
-    require_once '/xampp/htdocs/projetoWeb/model/entidades/Publicacoes.php';
+    require_once '/xampp/htdocs/projetoWeb/model/DAO/PublicationsDAO.php';
+    require_once '/xampp/htdocs/projetoWeb/model/entidades/Publications.php';
 
-    class PublicacoesController
+    class PublicationsController
     {
-        // Método para listar todas as publicações com total
-        public static function listarPublicacoesComTotal()
-        {
-            try {
-                $publicacoes = PublicacoesDAO::listarPublicacoes();
-                $total = count($publicacoes); // Contando o total de publicações
-                return [
-                    'publicacoes' => $publicacoes,
-                    'total' => $total,
-                ];
-            } catch (Exception $e) {
-                error_log("Erro ao listar publicações: " . $e->getMessage());
-                return [
-                    'publicacoes' => [],
-                    'total' => 0,
-                ];
-            }
-        }
-
-        // Método para listar as publicações de um usuário específico
-        public static function listarPublicacoesPorUsuario($id_usuario)
-        {
-            try {
-                // Chama o método do DAO para obter as publicações de um usuário específico
-                $publicacoes = PublicacoesDAO::listarPublicacoesPorUsuario($id_usuario);
-                return $publicacoes;
-            } catch (Exception $e) {
-                error_log("Erro ao listar publicações do usuário: " . $e->getMessage());
-                return [];
-            }
-        }
-        public static function cadastrarPublicacao()
+        // Método para criar publicação
+        public static function createPublication()
         {
             session_start();
 
@@ -50,7 +20,7 @@
                 }
 
                 // Obtém o próximo ID da tabela de publicações
-                $proximoId = PublicacoesDAO::obterProximoIdPublicacao();
+                $proximoId = PublicationsDAO::getNextPublicationId();
 
                 if ($proximoId === null) {
                     echo "Erro ao obter o próximo ID para a publicação.";
@@ -76,7 +46,7 @@
                 }
 
                 // Chama o método do DAO para salvar a publicação
-                $resultado = PublicacoesDAO::cadastrarPublicacao($idUsuario, $descricao, $anexo);
+                $resultado = PublicationsDAO::createPublication($idUsuario, $descricao, $anexo);
 
                 if ($resultado) {
                     header("Location: ../view/pages/home.php"); // Redireciona para a página principal
@@ -88,64 +58,98 @@
             }
         }
 
-        public static function consultarPublicacao($id_publicacao)
+        // Método para listar todas as publicações e o total
+        public static function getPublicationsWithTotal()
+        {
+            try {
+                $publicacoes = PublicationsDAO::getAllPublications();
+                $total = count($publicacoes); // Contando o total de publicações
+                return [
+                    'publicacoes' => $publicacoes,
+                    'total' => $total,
+                ];
+            } catch (Exception $e) {
+                error_log("Erro ao listar publicações: " . $e->getMessage());
+                return [
+                    'publicacoes' => [],
+                    'total' => 0,
+                ];
+            }
+        }
+
+        // Método para listar as publicações de um usuário específico
+        public static function getPublicationsByUser($id_usuario)
+        {
+            try {
+                // Chama o método do DAO para obter as publicações de um usuário específico
+                $publicacoes = PublicationsDAO::getPublicationsByUser($id_usuario);
+                return $publicacoes;
+            } catch (Exception $e) {
+                error_log("Erro ao listar publicações do usuário: " . $e->getMessage());
+                return [];
+            }
+        }
+
+        // Método para consultar uma publicação pelo id
+        public static function getPublicationById($id_publicacao)
         {
             try {
                 // Chama o método do DAO para obter a publicação
-                return PublicacoesDAO::consultarPublicacao($id_publicacao);
-                
+                return PublicationsDAO::getPublicationById($id_publicacao);
             } catch (Exception $e) {
                 error_log("Erro ao consultar publicação: " . $e->getMessage());
                 return null;
             }
         }
 
-        public static function consultarPublicacaoComDadosUsuario($id_publicacao)
+        // Método para consultar publicação com os dados do usuário
+        public static function getPublicationAndUser($id_publicacao)
         {
             try {
                 // Chama o método do DAO para obter a publicação
-                return PublicacoesDAO::consultarPublicacaoComDadosUsuario($id_publicacao);
+                return PublicationsDAO::getPublicationAndUser($id_publicacao);
             } catch (Exception $e) {
                 error_log("Erro ao consultar publicação: " . $e->getMessage());
                 return null;
             }
         }
 
-        public static function atualizarPublicacao($idPublicacao, $descricao, $file = null)
+        // Método para atualizar uma publicação
+        public static function updatePublication($idPublicacao, $descricao, $file = null)
         {
             if (!$idPublicacao || !$descricao) {
                 return false;
             }
-        
+
             $anexo = null;
-        
+
             // Verifica se há um arquivo enviado
             if ($file && isset($file['anexo']) && $file['anexo']['error'] === UPLOAD_ERR_OK) {
                 $extensao = pathinfo($file['anexo']['name'], PATHINFO_EXTENSION);
                 $nomeArquivo = "publicacao_{$idPublicacao}." . $extensao;
                 $caminhoDestino = "../view/IMG/" . $nomeArquivo;
-        
+
                 if (move_uploaded_file($file['anexo']['tmp_name'], $caminhoDestino)) {
                     $anexo = "../IMG/" . $nomeArquivo;
                 }
             } else {
                 // Caso nenhum arquivo seja enviado, mantém o anexo existente
-                $publicacao = PublicacoesDAO::consultarPublicacao($idPublicacao);
+                $publicacao = PublicationsDAO::getPublicationById($idPublicacao);
                 $anexo = $publicacao['anexo'] ?? null;
             }
-        
-            return PublicacoesDAO::atualizarPublicacao($idPublicacao, $descricao, $anexo);
+
+            return PublicationsDAO::updatePublication($idPublicacao, $descricao, $anexo);
         }
-        
 
 
-        public static function deletarPublicacao($idPublicacao)
+        // Método para deletar publicação
+        public static function deletePublication($idPublicacao)
         {
-            return PublicacoesDAO::deletarPublicacao($idPublicacao);
+            return PublicationsDAO::deletePublication($idPublicacao);
         }
     }
 
     // Verifica qual ação será executada
     if (isset($_POST['action']) && $_POST['action'] === 'cadastrar') {
-        PublicacoesController::cadastrarPublicacao();
+        PublicationsController::createPublication();
     }

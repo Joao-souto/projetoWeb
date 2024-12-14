@@ -1,5 +1,5 @@
 <?php
-require_once '../../controller/UsuariosController.php';
+require_once '../../controller/UsersController.php';
 
 // Variáveis para armazenar os dados do formulário
 $nome = '';
@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $senha = isset($_POST['senha']) ? $_POST['senha'] : '';
 
     // Chama o método para cadastrar o usuário
-    $mensagem = UsuariosController::cadastrarUsuario($nome, $email, $senha);
+    $mensagem = UsersController::createUser($nome, $email, $senha);
 
     // Verifica se a mensagem de sucesso foi retornada e redireciona para o login
     if ($mensagem === "Usuário cadastrado com sucesso!") {
@@ -33,28 +33,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../CSS/login-cadastro.css">
+    <link rel="stylesheet" href="../CSS/login-register.css">
     <link rel="icon" href="../IMG/logoIcon.png" type="image/png">
-    <title>Cadastro</title>
+    <title>Register</title>
 </head>
 
 <body>
     <div>
-        <h1 class="titulo">Cadastre-se</h1>
+        <h1 class="titulo">Sign Up</h1>
 
-        <form action="cadastro.php" method="POST">
+        <form action="register.php" method="POST">
             <div>
-                <input type="text" id="nome" name="nome" class="input-login" placeholder="Nome" value="<?php echo htmlspecialchars($nome); ?>" required>
+                <input type="text" id="nome" name="nome" class="input-login" placeholder="Name" value="<?php echo htmlspecialchars($nome); ?>" required>
             </div>
             <div>
                 <input type="email" id="email" name="email" class="input-login" placeholder="Email" value="<?php echo htmlspecialchars($email); ?>" required>
             </div>
             <div>
-                <input type="password" id="senha" name="senha" class="input-login" placeholder="Senha" value="<?php echo htmlspecialchars($senha); ?>" required>
+                <input type="password" id="senha" name="senha" class="input-login" placeholder="Password" value="<?php echo htmlspecialchars($senha); ?>" required>
             </div>
-            <button type="submit" class="botao-login">Cadastrar</button>
+            <button type="submit" class="botao-login">Register</button>
         </form>
-        <a href="../../index.php" class="link-cadastro">Login</a>
+        <a href="../../index.php" class="link-cadastro">Sign in</a>
         <h3 class="retorno"><?php echo $mensagem ?></h3>
     </div>
 </body>

@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once __DIR__ . '/controller/UsuariosController.php';
+require_once __DIR__ . '/controller/UsersController.php';
 
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($email) || empty($senha)) {
         $mensagem = "Por favor, preencha todos os campos.";
     }else{
-        $usuario = UsuariosController::realizarLogin($email, $senha);
+        $usuario = UsersController::isValidLogin($email, $senha);
         if ($usuario->getLoginValido()) {
             $_SESSION["id"] = $usuario->getIdUsuario();
             $_SESSION["nome"] = $usuario->getNome();
@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="view/CSS/login-cadastro.css">
+    <link rel="stylesheet" href="view/CSS/login-register.css">
     <link rel="icon" href="view/IMG/logoIcon.png" type="image/png">
     <title>Login</title>
 </head>
@@ -52,16 +52,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <form action="index.php" method="POST">
 
             <div>
-                <input type="text" name="email" placeholder="email" class="input-login">
+                <input type="text" name="email" placeholder="Email" class="input-login">
             </div>
 
             <div>
-                <input type="password" name="senha" placeholder="senha" class="input-login">
+                <input type="password" name="senha" placeholder="Password" class="input-login">
             </div>
 
-            <button type="submit" class="botao-login">Entrar</button>
+            <button type="submit" class="botao-login">Sign in</button>
         </form>
-        <a href="view/pages/cadastro.php" class="link-cadastro">Cadastre-se</a>
+        <a href="view/pages/register.php" class="link-cadastro">Sign up</a>
         <h3 class="retorno"><?php echo $mensagem ?></h3>
     </div>
 

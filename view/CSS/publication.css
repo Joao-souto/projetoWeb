@@ -54,6 +54,9 @@ img{
     width: 51vw;
     border: solid 3px white;
 }
+#edit-h1{
+    color: white;
+}
 h3,p{
     color: white;
     margin-top: 2VH;

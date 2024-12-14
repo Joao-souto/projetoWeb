@@ -1,18 +1,20 @@
 <?php
-require_once '/xampp/htdocs/projetoWeb/model/DAO/UsuariosDAO.php';
-require_once '/xampp/htdocs/projetoWeb/model/entidades/Usuarios.php';
+require_once '/xampp/htdocs/projetoWeb/model/DAO/UsersDAO.php';
+require_once '/xampp/htdocs/projetoWeb/model/entidades/Users.php';
 
-class UsuariosController {
+class UsersController
+{
     // Método para criar um novo usuário
-    public static function cadastrarUsuario($nome, $email, $senha) {
+    public static function createUser($nome, $email, $senha)
+    {
         // Verifica o formato do e-mail
-        if (!filter_var(  $email, FILTER_VALIDATE_EMAIL)) {
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             return "E-mail inválido.";
         }
         // Cria o usuário utilizando o DAO
         try {
-            $usuario = new Usuarios($nome, $email, $senha);
-            $resultado = UsuariosDAO::cadastrarUsuario($usuario);
+            $usuario = new Users($nome, $email, $senha);
+            $resultado = UsersDAO::createUser($usuario);
             if ($resultado == true) {
                 return "Usuário cadastrado com sucesso!";
             } else {
@@ -24,14 +26,15 @@ class UsuariosController {
         }
     }
 
-    // Método para realizar o login
-    public static function realizarLogin($email, $senha): string|Usuarios {
+    // Método para verificar login
+    public static function isValidLogin($email, $senha)
+    {
 
         // Cria usuario
-        $usuarioLogin = new Usuarios("", $email, $senha);
+        $usuarioLogin = new Users("", $email, $senha);
 
         // Busca o usuário utilizando o DAO
-        $usuario = UsuariosDAO::loginValido($email, $senha);
+        $usuario = UsersDAO::isValidLogin($email, $senha);
         if ($usuario) {
             return $usuario; // Retorna o objeto usuário consultado no banco, Login válido
         } else {
@@ -40,9 +43,10 @@ class UsuariosController {
     }
 
     // Método para listar todos os usuários
-    public static function listarUsuarios() {
+    public static function getAllUsers()
+    {
         try {
-            return UsuariosDAO::listarUsuarios();
+            return UsersDAO::getAllUsers();
         } catch (Exception $e) {
             error_log("Erro ao listar usuários: " . $e->getMessage());
             return [];
@@ -50,33 +54,34 @@ class UsuariosController {
     }
 
     // Método para atualizar os dados do usuário
-    public static function atualizarUsuario($idUsuario, $nome, $email, $senha = null, $fotoPerfil = null) {
+    public static function updateUser($idUsuario, $nome, $email, $senha = null, $fotoPerfil = null)
+    {
         try {
             // Verifica o formato do e-mail
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 return "E-mail inválido.";
             }
-    
+
             // Busca o usuário atual pelo ID
-            $usuarioAtual = UsuariosDAO::consultarUsuarioId($idUsuario);
-    
+            $usuarioAtual = UsersDAO::getUserById($idUsuario);
+
             if (!$usuarioAtual) {
                 return "Usuário não encontrado.";
             }
-    
+
             // Atualiza os dados do usuário
             $usuarioAtual->setNome($nome);
             $usuarioAtual->setEmail($email);
             $usuarioAtual->setSenha($senha);
-    
+
             // Atualiza a foto de perfil, se fornecida
             if ($fotoPerfil !== null) {
                 $usuarioAtual->setFotoPerfil($fotoPerfil);
             }
-    
+
             // Atualiza o usuário no banco de dados
-            $resultado = UsuariosDAO::atualizarUsuario($usuarioAtual);
-    
+            $resultado = UsersDAO::updateUser($usuarioAtual);
+
             if ($resultado) {
                 return "Perfil atualizado com sucesso!";
             } else {
@@ -87,6 +92,4 @@ class UsuariosController {
             return "Ocorreu um erro inesperado.";
         }
     }
-
 }
-?>
