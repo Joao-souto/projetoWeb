@@ -19,3 +19,6 @@ CREATE TABLE publicacoes (
     status ENUM('ativo', 'excluido', 'pendente') DEFAULT 'ativo',
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) ON DELETE CASCADE
 );
+
+INSERT INTO usuarios (nome, email, senha, foto_perfil) VALUES ("João Souto","joaozinho@gmail.com","senhaForte","../img/profiles/perfil_1.jpeg");
+INSERT INTO publicacoes (id_usuario, descricao, anexo) VALUES (1,"Bem vindo!", "../img/posts/publicacao_1.png");

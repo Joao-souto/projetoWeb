@@ -7,7 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $descricao = $_POST['descricao'] ?? null;
 
     if ($idPublicacao && $descricao) {
-        $resultado = PublicationsController::updatePublication($idPublicacao, $descricao, $_FILES);
+        $resultado = PublicationsController::updatePublication($idPublicacao, $descricao, null);
 
         if ($resultado) {
             header("Location: profiles.php?message=Publicação atualizada com sucesso!");

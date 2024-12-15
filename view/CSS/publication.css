@@ -57,6 +57,12 @@ img{
 #edit-h1{
     color: white;
 }
+textarea{
+    width: 25vw;
+    padding: 1vh;
+    color: black;
+    margin: 5vh 0;
+}
 h3,p{
     color: white;
     margin-top: 2VH;

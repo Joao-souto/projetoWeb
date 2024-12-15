@@ -33,11 +33,10 @@ if (empty($publicacao['id_publicacao'])) {
     </header>
     <main>  
         <h1 id="edit-h1">Edit Publication</h1>
-        <form action="update-publication.php" method="post" enctype="multipart/form-data">
+        <form action="update-publication.php" method="post">
             <input type="hidden" name="id_publicacao" value="<?php echo $publicacao['id_publicacao']; ?>">
             <div class="div-edit">
-                <textarea name="descricao" id="descricao" rows="5"><?php echo htmlspecialchars($publicacao['descricao']); ?></textarea>
-                <input type="file" name="anexo" id="anexo">
+                <textarea name="descricao" id="descricao"><?php echo htmlspecialchars($publicacao['descricao']); ?></textarea>
             </div>
             <?php if ($publicacao['anexo']): ?>
                 <img src="<?php echo htmlspecialchars($publicacao['anexo']); ?>" alt="Imagem atual" width="200" class="img-ampliada">
